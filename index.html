@@ -15,9 +15,9 @@ if(pass !== '82424520@'){
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box;font-family:"Microsoft YaHei",SimSun}
-body{width:210mm;margin:0 auto;padding:30px 25px;font-size:15px;line-height:1.7}
+body{width:210mm;margin:0 auto;padding:30px 25px;font-size:15px;line-height:1.7;background:#fff}
 .top-btn-box{margin-bottom:20px;text-align:right;gap:10px;display:flex;justify-content:flex-end;flex-wrap:wrap;}
-#exportWord,#saveExcel,#clearForm,#viewHistory{
+#exportWord,#saveExcel,#clearForm,#viewHistory,#saveOne,#clearHistory{
     padding:6px 18px;
     background:#2578cf;
     color:#fff;
@@ -26,12 +26,16 @@ body{width:210mm;margin:0 auto;padding:30px 25px;font-size:15px;line-height:1.7}
     font-size:15px;
     cursor:pointer;
 }
+#saveOne{background:#099470;}
 #saveExcel{background:#239958;}
 #clearForm{background:#f56c6c;}
+#clearHistory{background:#c0392b;}
 #viewHistory{background:#9b59b6;}
 #exportWord:hover{background:#1f67b4;}
+#saveOne:hover{background:#077c5e;}
 #saveExcel:hover{background:#1e844c;}
 #clearForm:hover{background:#e04e4e;}
+#clearHistory:hover{background:#a32e1f;}
 #viewHistory:hover{background:#8e44ad;}
 h1{text-align:center;font-size:22px;margin-bottom:20px}
 h2{font-size:17px;margin:24px 0 10px;border-left:4px #2578cf solid;padding-left:8px}
@@ -50,7 +54,8 @@ h2{font-size:17px;margin:24px 0 10px;border-left:4px #2578cf solid;padding-left:
   text-align:left;
   margin-right:0px;
 }
-input,select{padding:3px 4px;font-size:15px;border:1px #999 solid;}
+input,select{padding:3px 4px;font-size:15px;border:1px #999 solid;outline:none;}
+input:focus,select:focus{border-color:#2578cf}
 .inp-id{width:20ch;}
 .inp-short{width:110px;}
 .inp-classnum{width:6ch;}
@@ -86,12 +91,15 @@ input,select{padding:3px 4px;font-size:15px;border:1px #999 solid;}
 #historyClose{
     margin-top:15px;padding:6px 18px;background:#f56c6c;color:#fff;border:none;border-radius:4px;cursor:pointer;
 }
+table{font-size:12px;}
 </style>
 </head>
 <body>
 <div class="top-btn-box">
     <button id="clearForm">清空表单</button>
+    <button id="saveOne">保存本条</button>
     <button id="viewHistory">查看历史记录</button>
+    <button id="clearHistory">清空全部历史</button>
     <button id="exportWord">导出Word</button>
     <button id="saveExcel">保存到Excel汇总表</button>
 </div>
@@ -723,6 +731,25 @@ function getHistory(){
     return JSON.parse(localStorage.getItem('tbCaseHistory') || '[]');
 }
 
+// ==========新增：保存本条按钮==========
+document.getElementById('saveOne').onclick = function(){
+    let currentData = getFormData();
+    if(!currentData.姓名 && !currentData.身份证号){
+        alert('请至少填写【姓名】或【身份证号】后保存！');
+        return;
+    }
+    saveToHistory(currentData);
+    alert('本条信息已保存至本地历史记录！可在【查看历史记录】中查阅');
+};
+
+// ==========新增：清空全部历史记录按钮==========
+document.getElementById('clearHistory').onclick = function(){
+    if(confirm('确定要永久清空所有本地历史记录？删除后无法恢复！')){
+        localStorage.removeItem('tbCaseHistory');
+        alert('全部历史记录已清空！');
+    }
+};
+
 // 清空表单
 document.getElementById('clearForm').onclick = function(){
     if(confirm('确定要清空当前表单吗？')){
@@ -732,6 +759,14 @@ document.getElementById('clearForm').onclick = function(){
         document.querySelectorAll('.hide').forEach(el=>{
             el.classList.add('hide');
         });
+        //清空动态生成行
+        document.getElementById('familyWrap').innerHTML='';
+        document.getElementById('classRoomWrap').innerHTML='';
+        document.getElementById('dormWrap').innerHTML='';
+        document.getElementById('homeWrap').innerHTML='';
+        document.getElementById('teacherWrap').innerHTML='';
+        document.getElementById('otherWrap').innerHTML='';
+        document.getElementById('visitWrap').innerHTML='';
     }
 };
 
