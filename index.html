@@ -10,77 +10,98 @@
 *{box-sizing:border-box;font-family:"Microsoft YaHei",SimSun}
 body{width:210mm;margin:0 auto;padding:30px 25px;font-size:15px;line-height:1.7}
 .top-btn-box{margin-bottom:20px;text-align:right;gap:10px;display:flex;justify-content:flex-end;flex-wrap:wrap;}
-#exportWord,#saveItem,#exportAllExcel,#clearForm,#viewHistory,#clearHistory{
+#exportWord,#saveExcel,#clearForm,#viewHistory{
     padding:6px 18px;
+    background:#2578cf;
     color:#fff;
     border:none;
     border-radius:4px;
     font-size:15px;
     cursor:pointer;
 }
+#saveExcel{background:#239958;}
 #clearForm{background:#f56c6c;}
-#saveItem{background:#27ae60;}
 #viewHistory{background:#9b59b6;}
-#exportWord{background:#2578cf;}
-#exportAllExcel{background:#e67e22;}
-#clearHistory{background:#c0392b;}
 #exportWord:hover{background:#1f67b4;}
-#saveItem:hover{background:#1e8449;}
-#exportAllExcel:hover{background:#d35400;}
+#saveExcel:hover{background:#1e844c;}
 #clearForm:hover{background:#e04e4e;}
 #viewHistory:hover{background:#8e44ad;}
-#clearHistory:hover{background:#96281b;}
 h1{text-align:center;font-size:22px;margin-bottom:20px}
 h2{font-size:17px;margin:24px 0 10px;border-left:4px #2578cf solid;padding-left:8px}
 .item{margin:9px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
 .no-gap{gap:0ch !important;}
 .item-col{display:flex;flex-direction:column;gap:4px;align-items:flex-start;}
-.class-row,.dorm-row,.teacher-row,.other-row,.family-row,.home-row{margin:8px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
-.label-fixed{flex-shrink:0;white-space:nowrap;text-align:left;margin-right:0px;}
+.class-row{margin:8px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
+.dorm-row{margin:8px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
+.teacher-row{margin:8px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
+.other-row{margin:8px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
+.family-row{margin:6px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
+.home-row{margin:8px 0;display:flex;align-items:center;justify-content:flex-start;gap:1em;flex-wrap:wrap;}
+.label-fixed{
+  flex-shrink:0;
+  white-space:nowrap;
+  text-align:left;
+  margin-right:0px;
+}
 input,select{padding:3px 4px;font-size:15px;border:1px #999 solid;}
-.inp-id{width:20ch;}.inp-short{width:110px;}.inp-classnum{width:6ch;}.inp-roommate{width:6ch;}.inp-area5{width:5ch;}.inp-char5{width:5ch;}.inp-long{width:320px;}.inp-char4{width:4ch;}.inp-count6{width:6ch;}.inp-name8{width:18ch;}.inp-sex3{width:3ch;}.inp-tel19{width:19ch;}.inp-dayweek15{width:15ch;}.inp-classhour18{width:18ch;}.inp-teacherfreq{width:16ch;}.inp-otherfreq{width:16ch;}.inp-otherjob{width:8ch;}.inp-othername{width:8ch;}.inp-dormaddr{width:18ch;}
-.hide{display:none;}.read{border:1px #ccc solid;background:#f9f9f9;}
+.inp-id{width:20ch;}
+.inp-short{width:110px;}
+.inp-classnum{width:6ch;}
+.inp-roommate{width:6ch;}
+.inp-area5{width:5ch;}
+.inp-char5{width:5ch;}
+.inp-long{width:320px;}
+.inp-char4{width:4ch;}
+.inp-count6{width:6ch;}
+.inp-name8{width:18ch;}
+.inp-sex3{width:3ch;}
+.inp-tel19{width:19ch;}
+.inp-dayweek15{width:15ch;}
+.inp-classhour18{width:18ch;}
+.inp-teacherfreq{width:16ch;}
+.inp-otherfreq{width:16ch;}
+.inp-otherjob{width:8ch;}
+.inp-othername{width:8ch;}
+.inp-dormaddr{width:18ch;}
+.hide{display:none;}
+.read{border:1px #ccc solid;background:#f9f9f9;}
 #section6-date{color:#333;font-weight:500;padding:0 4px;}
 .info-text{margin-left:8px;color:#333;white-space:nowrap;}
 .bottom-item{margin-top:30px;}
-#historyModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;justify-content:center;align-items:center;z-index:999;}
-#historyContent{background:#fff;padding:20px;border-radius:8px;width:90%;max-width:1200px;max-height:80vh;overflow:auto;}
-#historyClose,#delConfirm,#selectAll,#invertSelect,#delAll{margin:6px;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;color:#fff;}
-#historyClose{background:#666;}
-#delConfirm{background:#d63031;}
-#selectAll{background:#0984e3;}
-#invertSelect{background:#6c5ce7;}
-#delAll{background:#e17055;}
-.btn-row{margin:10px 0;display:flex;gap:8px;flex-wrap:wrap;}
+/* 历史记录弹窗 */
+#historyModal{
+    position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);
+    display:none;justify-content:center;align-items:center;z-index:999;
+}
+#historyContent{
+    background:#fff;padding:20px;border-radius:8px;width:90%;max-width:1200px;max-height:80vh;overflow:auto;
+}
+#historyClose{
+    margin-top:15px;padding:6px 18px;background:#f56c6c;color:#fff;border:none;border-radius:4px;cursor:pointer;
+}
 </style>
 </head>
 <body>
 <div class="top-btn-box">
     <button id="clearForm">清空表单</button>
-    <button id="saveItem">保存本条</button>
     <button id="viewHistory">查看历史记录</button>
-    <button id="clearHistory">清空历史</button>
     <button id="exportWord">导出Word</button>
-    <button id="exportAllExcel">批量导出Excel</button>
+    <button id="saveExcel">保存到Excel汇总表</button>
 </div>
 
+<!-- 历史记录弹窗 -->
 <div id="historyModal">
     <div id="historyContent">
-        <h3>历史记录管理（勾选需要删除的数据）</h3>
-        <div class="btn-row">
-            <button id="selectAll">全选</button>
-            <button id="invertSelect">反选</button>
-            <button id="delAll">一键清空全部</button>
-            <button id="delConfirm">删除选中项</button>
-            <button id="historyClose">关闭弹窗</button>
-        </div>
+        <h3>历史填写记录</h3>
         <div id="historyList"></div>
+        <button id="historyClose">关闭</button>
     </div>
 </div>
 
 <div id="printWrap">
 <h1>学校肺结核患者个案调查表</h1>
 <h2>一、一般情况</h2>
+
 <div class="item no-gap item-col">
     <div class="item">
         <span class="label-fixed">1.1 姓名：</span>
@@ -101,6 +122,7 @@ input,select{padding:3px 4px;font-size:15px;border:1px #999 solid;}
         <span id="otherJobBox" class="hide">，补充：<input type="text" id="jobOther" placeholder="填写具体职业"></span>
     </div>
 </div>
+
 <div class="item" id="autoInfoBox" style="display:none;">
     <span class="label-fixed">性别：</span>
     <input class="inp-short read" readonly id="sexShow">
@@ -109,177 +131,477 @@ input,select{padding:3px 4px;font-size:15px;border:1px #999 solid;}
     <span class="label-fixed">年龄：</span>
     <input class="inp-short read" readonly id="ageShow"> 岁
 </div>
-<div class="item"><span class="label-fixed">1.2 现住址：</span><input type="text" class="inp-long" id="addrNow"></div>
-<div class="item"><span class="label-fixed">户籍地址：</span><input type="text" class="inp-long" id="addrHome"></div>
-<div class="item"><span class="label-fixed">1.3 学校名称：</span><input type="text" class="inp-long" id="schoolName"></div>
+
 <div class="item">
-    <span class="label-fixed">年级班级：</span><input type="text" id="className" placeholder="年级班级">
-    <span class="label-fixed">班级人数：</span><input type="text" class="inp-classnum" id="classNum">
+    <span class="label-fixed">1.2 现住址：</span>
+    <input type="text" class="inp-long" id="addrNow">
 </div>
 <div class="item">
-    <span class="label-fixed">宿舍：</span><input type="text" class="inp-dormaddr" id="dormAddr" placeholder="楼栋+楼层+房号">
-    <span class="label-fixed">室友人数：</span><input type="text" class="inp-roommate" id="roomMateNum">
+    <span class="label-fixed">户籍地址：</span>
+    <input type="text" class="inp-long" id="addrHome">
+</div>
+
+<div class="item">
+    <span class="label-fixed">1.3 学校名称：</span>
+    <input type="text" class="inp-long" id="schoolName">
 </div>
 <div class="item">
-    <span class="label-fixed">宿舍面积(m²)：</span><input type="text" class="inp-area5" id="dormArea">
-    <span class="label-fixed">开窗面积(m²)：</span><input type="text" class="inp-area5" id="winArea">
+    <span class="label-fixed">年级班级：</span>
+    <input type="text" id="className" placeholder="年级班级">
+    <span class="label-fixed">班级人数：</span>
+    <input type="text" class="inp-classnum" id="classNum" placeholder="">
+</div>
+<div class="item">
+    <span class="label-fixed">宿舍：</span>
+    <input type="text" class="inp-dormaddr" id="dormAddr" placeholder="楼栋+楼层+房号">
+    <span class="label-fixed">室友人数：</span>
+    <input type="text" class="inp-roommate" id="roomMateNum">
+</div>
+<div class="item">
+    <span class="label-fixed">宿舍面积(m²)：</span>
+    <input type="text" class="inp-area5" id="dormArea">
+    <span class="label-fixed">开窗面积(m²)：</span>
+    <input type="text" class="inp-area5" id="winArea">
 </div>
 <div class="item">
     <span class="label-fixed">宿舍通风：</span>
-    <select id="dormWind"><option>不开窗通风</option><option>不定时开窗通风</option><option>每日开窗通风</option></select>
+    <select id="dormWind">
+        <option>不开窗通风</option>
+        <option>不定时开窗通风</option>
+        <option>每日开窗通风</option>
+    </select>
     <span class="label-fixed">环境卫生：</span>
-    <select id="dormEnv"><option>好</option><option>一般</option><option>差</option></select>
+    <select id="dormEnv">
+        <option>好</option>
+        <option>一般</option>
+        <option>差</option>
+    </select>
 </div>
-<div class="item"><span class="label-fixed">1.4 家庭住址：</span><input type="text" class="inp-long" id="homeAddr"></div>
+
 <div class="item">
-    <span class="label-fixed">面积(m²)：</span><input type="text" class="inp-char5" id="homeArea">
-    <span class="label-fixed">通风：</span>
-    <select id="homeWindSel"><option>请选择</option><option>不开窗</option><option>不定时开窗</option><option>每日开窗</option></select>
-    <span class="label-fixed">环境：</span>
-    <select id="homeEnv"><option>好</option><option>一般</option><option>差</option></select>
+    <span class="label-fixed">1.4 家庭住址：</span>
+    <input type="text" class="inp-long" id="homeAddr">
 </div>
-<div class="item"><span class="label-fixed">同住人数：</span><input type="number" id="liveCount" min="0" class="inp-char5"></div>
+<div class="item">
+    <span class="label-fixed">面积(m²)：</span>
+    <input type="text" class="inp-char5" id="homeArea">
+    <span class="label-fixed">通风：</span>
+    <select id="homeWindSel">
+        <option>请选择</option>
+        <option>不开窗</option>
+        <option>不定时开窗</option>
+        <option>每日开窗</option>
+    </select>
+    <span class="label-fixed">环境：</span>
+    <select id="homeEnv">
+        <option>好</option>
+        <option>一般</option>
+        <option>差</option>
+    </select>
+</div>
+<div class="item">
+    <span class="label-fixed">同住人数：</span>
+    <input type="number" id="liveCount" min="0" class="inp-char5">
+</div>
+
 <div id="familyWrap"></div>
 
 <h2>二、既往病史和接触史</h2>
 <div class="item">
     <span class="label-fixed">2.1 既往结核病史：</span>
-    <select id="tbHistory"><option value="">请选择</option><option value="有">有</option><option value="无">无</option></select>
+    <select id="tbHistory">
+        <option value="">请选择</option>
+        <option value="有">有</option>
+        <option value="无">无</option>
+    </select>
 </div>
 <div id="tbDetailBox" class="hide">
     <div class="item">
-        <span class="label-fixed">首次诊断时间（年）：</span><input type="text" class="inp-short" id="firstTbYear">
-        <span class="label-fixed">是否治疗：</span><select id="firstTbTreat"><option>是</option><option>否</option></select>
+        <span class="label-fixed">首次诊断时间（年）：</span>
+        <input type="text" class="inp-short" id="firstTbYear">
+        <span class="label-fixed">是否治疗：</span>
+        <select id="firstTbTreat">
+            <option>是</option>
+            <option>否</option>
+        </select>
     </div>
     <div class="item">
-        <span class="label-fixed">末次诊断时间（年）：</span><input type="text" class="inp-short" id="lastTbYear">
-        <span class="label-fixed">是否治疗：</span><select id="lastTbTreat"><option>是</option><option>否</option></select>
+        <span class="label-fixed">末次诊断时间（年）：</span>
+        <input type="text" class="inp-short" id="lastTbYear">
+        <span class="label-fixed">是否治疗：</span>
+        <select id="lastTbTreat">
+            <option>是</option>
+            <option>否</option>
+        </select>
     </div>
 </div>
+
 <div class="item">
     <span class="label-fixed">2.2 其他慢性病史：</span>
     <select id="otherIll">
-        <option value="">请选择</option><option>无</option><option>①肺病</option><option>②肾病</option><option>③糖尿病</option><option>①+②</option><option>①+③</option><option>②+③</option><option>全都有</option>
+        <option value="">请选择</option>
+        <option>无</option>
+        <option>①肺病</option>
+        <option>②肾病</option>
+        <option>③糖尿病</option>
+        <option>①+②</option>
+        <option>①+③</option>
+        <option>②+③</option>
+        <option>全都有</option>
     </select>
 </div>
+
 <div class="item">
     <span class="label-fixed">2.3 吸烟史：</span>
-    <select id="smoke"><option value="">请选择</option><option>现在吸</option><option>以前吸</option><option>从不吸</option></select>
+    <select id="smoke">
+        <option value="">请选择</option>
+        <option>现在吸</option>
+        <option>以前吸</option>
+        <option>从不吸</option>
+    </select>
 </div>
+
 <div class="item">
     <span class="label-fixed">2.4 发病前，身边有无结核病患者？：</span>
-    <select id="contactSel"><option value="">请选择</option><option>无</option><option>不清楚</option><option>有</option></select>
+    <select id="contactSel">
+        <option value="">请选择</option>
+        <option>无</option>
+        <option>不清楚</option>
+        <option>有</option>
+    </select>
     <span id="contactWrap" class="hide">
-        ，<select id="contactType"><option>同住的家人</option><option>同班同学</option><option>同楼层班级</option><option>同宿舍</option><option>同楼层宿舍</option></select>
-        ，<select id="closeType"><option>不是密接</option><option>是密接</option></select>
+        ，
+        <select id="contactType">
+            <option>同住的家人</option>
+            <option>同班同学</option>
+            <option>同楼层班级</option>
+            <option>同宿舍</option>
+            <option>同楼层宿舍</option>
+        </select>
+        ，
+        <select id="closeType">
+            <option>不是密接</option>
+            <option>是密接</option>
+        </select>
     </span>
 </div>
 
-<h2>三、营养和健康状况</h2>
+<h2>三、营养和其他健康状况</h2>
 <div class="item">
-    <span class="label-fixed">3.1 营养状况：</span><select id="nutr"><option value="">请选择</option><option>好</option><option>一般</option><option>差</option></select>
-    <span class="label-fixed">睡眠状况：</span><select id="sleep"><option value="">请选择</option><option>好</option><option>一般</option><option>差</option></select>
+    <span class="label-fixed">3.1 营养状况：</span>
+    <select id="nutr">
+        <option value="">请选择</option>
+        <option>好</option>
+        <option>一般</option>
+        <option>差</option>
+    </select>
+    <span class="label-fixed">睡眠状况：</span>
+    <select id="sleep">
+        <option value="">请选择</option>
+        <option>好</option>
+        <option>一般</option>
+        <option>差</option>
+    </select>
 </div>
 <div class="item">
     <span class="label-fixed">3.2 学习/工作/生活压力：</span>
-    <select id="press"><option value="">请选择</option><option>大</option><option>一般</option><option>小</option></select>
+    <select id="press">
+        <option value="">请选择</option>
+        <option>大</option>
+        <option>一般</option>
+        <option>小</option>
+    </select>
 </div>
 
 <h2>四、本次发病和就诊情况</h2>
 <div class="item">
     <span class="label-fixed">4.1 有无症状：</span>
     <select id="symMainSel">
-        <option value="">请选择</option><option value="无症状">无症状</option><option value="①咳嗽">①咳嗽</option><option value="②咳痰">②咳痰</option><option value="③咯血或血痰">③咯血或血痰</option><option value="④胸痛">④胸痛</option><option value="⑤胸闷及气短">⑤胸闷及气短</option><option value="⑥低热">⑥低热</option><option value="⑦盗汗">⑦盗汗</option><option value="⑧乏力">⑧乏力</option><option value="⑨食欲减退">⑨食欲减退</option><option value="⑩消瘦">⑩消瘦</option><option value="⑪以上多种症状">⑪以上多种症状</option><option value="⑫其他">⑫其他</option>
+        <option value="">请选择</option>
+        <option value="无症状">无症状</option>
+        <option value="①咳嗽">①咳嗽</option>
+        <option value="②咳痰">②咳痰</option>
+        <option value="③咯血或血痰">③咯血或血痰</option>
+        <option value="④胸痛">④胸痛</option>
+        <option value="⑤胸闷及气短">⑤胸闷及气短</option>
+        <option value="⑥低热">⑥低热</option>
+        <option value="⑦盗汗">⑦盗汗</option>
+        <option value="⑧乏力">⑧乏力</option>
+        <option value="⑨食欲减退">⑨食欲减退</option>
+        <option value="⑩消瘦">⑩消瘦</option>
+        <option value="⑪以上多种症状">⑪以上多种症状</option>
+        <option value="⑫其他">⑫其他</option>
     </select>
     <input id="symRemarkInp" class="hide">
 </div>
-<div class="item hide" id="dateWrap"><span class="label-fixed">首次症状出现日期：</span><input type="date" id="firstSymDate"></div>
+
+<div class="item hide" id="dateWrap">
+    <span class="label-fixed">首次症状出现日期：</span>
+    <input placeholder="例：20260101" id="firstSymDate" type="date">
+</div>
+
 <div id="symBoxAll" class="hide">
-    <div class="item" id="severityItem"><span class="label-fixed">4.1 自我感觉症状的严重程度：</span><select id="symLevel"><option>请选择</option><option>轻</option><option>中</option><option>重</option></select></div>
-    <div class="item"><span class="label-fixed">4.2 就医次数：</span><input type="number" id="visitCountInp" min="0" class="inp-count6" placeholder="填写数字"></div>
+    <div class="item" id="severityItem">
+        <span class="label-fixed">4.1 自我感觉症状的严重程度：</span>
+        <select id="symLevel">
+            <option>请选择</option>
+            <option>轻</option>
+            <option>中</option>
+            <option>重</option>
+        </select>
+    </div>
+    <div class="item">
+        <span class="label-fixed">4.2 就医次数：</span>
+        <input type="number" id="visitCountInp" min="0" class="inp-count6" placeholder="填写数字">
+    </div>
     <div id="visitWrap"></div>
 </div>
 
 <h2>五、本次患者诊疗情况</h2>
 <div class="item">
     <span class="label-fixed">5.1 患者发现方式：</span>
-    <select id="findWaySel"><option value="">请选择</option><option>因症就诊</option><option>接触者筛查</option><option>健康检查</option><option>其他</option></select>
+    <select id="findWaySel">
+        <option value="">请选择</option>
+        <option>因症就诊</option>
+        <option>接触者筛查</option>
+        <option>健康检查</option>
+        <option>其他</option>
+    </select>
     <input id="findOtherInp" class="hide" placeholder="写明具体方式">
 </div>
 <div class="item">
     <span class="label-fixed">5.2 TST检测：</span>
-    <select id="tbTestSel"><option value="">请选择</option><option>未检测</option><option>结核菌素皮肤试验</option><option>γ干扰素释放试验</option></select>
-    <span id="ppdWrap" class="hide">检测日期：<input id="ppdDate">，结果(mm)：<input id="ppdRes">
-    <select id="ppdSign"><option>无水泡/双圈/坏死/溃疡等</option><option>有水泡/双圈/坏死/溃疡等</option></select></span>
-    <span id="igraWrap" class="hide">方法：<input id="igraMethod">，<input id="igraDate">，结果：
-    <select id="igraRes"><option>请选择</option><option>阳性</option><option>阴性</option><option>不确定</option></select></span>
+    <select id="tbTestSel">
+        <option value="">请选择</option>
+        <option>未检测</option>
+        <option>结核菌素皮肤试验</option>
+        <option>γ干扰素释放试验</option>
+    </select>
+    <span id="ppdWrap" class="hide">
+        检测日期：<input id="ppdDate" placeholder="例：20260101">，结果(mm)：<input id="ppdRes" placeholder="皮试大小,如5*9">
+        <select id="ppdSign">
+            <option>无水泡/双圈/坏死/溃疡等</option>
+            <option>有水泡/双圈/坏死/溃疡等</option>
+        </select>
+    </span>
+    <span id="igraWrap" class="hide">
+        方法：<input id="igraMethod" placeholder="方法">，<input id="igraDate" placeholder="检测日期">，结果：
+        <select id="igraRes">
+            <option>请选择</option>
+            <option>阳性</option>
+            <option>阴性</option>
+            <option>不确定</option>
+        </select>
+    </span>
 </div>
 <div class="item">
     <span class="label-fixed">5.3 胸部X片检查：</span>
-    <select id="xraySel"><option value="">请选择</option><option>无</option><option>左肺</option><option>右肺</option></select>
-    <span id="xrayWrap" class="hide"><input id="xDate">，<input id="xPos">，<select id="xLesionSel"><option value="">请选择</option><option>无</option><option>空洞</option><option>粟粒</option><option>空洞+粟粒</option></select></span>
+    <select id="xraySel">
+        <option value="">请选择</option>
+        <option>无</option>
+        <option>左肺</option>
+        <option>右肺</option>
+    </select>
+    <span id="xrayWrap" class="hide">
+        <input id="xDate" placeholder="检查日期">，<input id="xPos" placeholder="请表明上、中、下">，
+        <select id="xLesionSel">
+            <option value="">请选择</option>
+            <option>无</option>
+            <option>空洞</option>
+            <option>粟粒</option>
+            <option>空洞+粟粒</option>
+        </select>
+    </span>
 </div>
+
 <div class="item">
     <span class="label-fixed">5.4 病原学检查：</span>
-    <select id="pathSel"><option value="">请选择</option><option>未查</option><option>①涂片</option><option>②培养</option><option>③分生</option><option>④药敏</option><option>多项</option></select>
-    <span class="label-fixed">标本：</span><select id="specSel"><option value="">请选择</option><option>痰</option><option>胸水</option><option>其他</option></select>
+    <select id="pathSel">
+        <option value="">请选择</option>
+        <option>未查</option>
+        <option>①涂片</option>
+        <option>②培养</option>
+        <option>③分生</option>
+        <option>④药敏</option>
+        <option>多项</option>
+    </select>
+    <span class="label-fixed">标本：</span>
+    <select id="specSel">
+        <option value="">请选择</option>
+        <option>痰</option>
+        <option>胸水</option>
+        <option>其他</option>
+    </select>
     <input id="specOtherInp" class="hide" placeholder="填写标本名称">
 </div>
+
 <div id="resWrap">
-    <div class="item hide" id="itemSmear"><span class="label-fixed">涂片结果：</span><select id="smearSel"><option value="">请选择</option><option>阴性</option><option>阳性</option></select></div>
-    <div class="item hide" id="itemCult"><span class="label-fixed">培养结果：</span><select id="cultSel"><option value="">请选择</option><option>阴性</option><option>阳性</option><option>污染</option></select></div>
-    <div class="item hide" id="itemPcr"><span class="label-fixed">分生结果：</span><input id="pcrRes" placeholder="检测方法和结果"></div>
-    <div class="item hide" id="itemDrug"><span class="label-fixed">药敏结果：</span><select id="drugSel"><option value="">请选择</option><option>耐药</option><option>敏感</option><option>污染</option></select><input id="drugRemarkInp" class="hide" placeholder="请注明H/R/S/E"></div>
+    <div class="item hide" id="itemSmear">
+        <span class="label-fixed">涂片结果：</span>
+        <select id="smearSel">
+            <option value="">请选择</option>
+            <option>阴性</option>
+            <option>阳性</option>
+        </select>
+    </div>
+    <div class="item hide" id="itemCult">
+        <span class="label-fixed">培养结果：</span>
+        <select id="cultSel">
+            <option value="">请选择</option>
+            <option>阴性</option>
+            <option>阳性</option>
+            <option>污染</option>
+        </select>
+    </div>
+    <div class="item hide" id="itemPcr">
+        <span class="label-fixed">分生结果：</span>
+        <input id="pcrRes" placeholder="检测方法和结果">
+    </div>
+    <div class="item hide" id="itemDrug">
+        <span class="label-fixed">药敏结果：</span>
+        <select id="drugSel">
+            <option value="">请选择</option>
+            <option>耐药</option>
+            <option>敏感</option>
+            <option>污染</option>
+        </select>
+        <input id="drugRemarkInp" class="hide" placeholder="请注明H/R/S/E">
+    </div>
 </div>
+
 <div class="item">
     <span class="label-fixed">5.5 诊断性治疗：</span>
-    <select id="treatSel"><option value="">请选择</option><option>无</option><option>抗炎</option><option>抗结核</option></select>
+    <select id="treatSel">
+        <option value="">请选择</option>
+        <option>无</option>
+        <option>抗炎</option>
+        <option>抗结核</option>
+    </select>
     <input id="treatInp" class="hide" placeholder="注明治疗结果">
 </div>
+
 <div class="item">
     <span class="label-fixed">5.6 诊断结果：</span>
-    <select id="diagSel"><option value="">请选择</option><option>I型</option><option>II型</option><option>III型</option><option>IV型</option><option>V型</option><option>其他</option></select>
+    <select id="diagSel">
+        <option value="">请选择</option>
+        <option>I型</option>
+        <option>II型</option>
+        <option>III型</option>
+        <option>IV型</option>
+        <option>V型</option>
+        <option>其他</option>
+    </select>
     <input id="diagOtherInp" class="hide" placeholder="注明医院诊断">
 </div>
-<div class="item"><span class="label-fixed">5.7 诊断日期：</span><input type="date" id="diagDate"></div>
-<div class="item"><span class="label-fixed">5.8 诊断的医疗机构名称：</span><input type="text" id="hospitalName"></div>
-<div class="item"><span class="label-fixed">5.9 填写传染病报告卡的日期：</span><input type="date" id="reportCardDate"></div>
-<div class="item"><span class="label-fixed">5.10 录入传染病网络报告信息系统的日期：</span><input type="date" id="netInputDate"></div>
-<div class="item"><span class="label-fixed">5.11 结核病登记日期：</span><input type="date" id="regDate"></div>
+
+<div class="item">
+    <span class="label-fixed">5.7 诊断日期：</span>
+    <input type="date" id="diagDate">
+</div>
+<div class="item">
+    <span class="label-fixed">5.8 诊断的医疗机构名称：</span>
+    <input type="text" id="hospitalName" placeholder="填写医疗机构全称">
+</div>
+<div class="item">
+    <span class="label-fixed">5.9 填写传染病报告卡的日期：</span>
+    <input type="date" id="reportCardDate">
+</div>
+<div class="item">
+    <span class="label-fixed">5.10 录入传染病网络报告信息系统的日期：</span>
+    <input type="date" id="netInputDate">
+</div>
+<div class="item">
+    <span class="label-fixed">5.11 结核病登记日期：</span>
+    <input type="date" id="regDate">
+</div>
 <div class="item">
     <span class="label-fixed">5.12 登记分类：</span>
-    <select id="regTypeSel"><option value="">请选择</option><option>新患者</option><option>复发</option><option>返回</option><option>治疗失败</option><option>其他</option></select>
+    <select id="regTypeSel">
+        <option value="">请选择</option>
+        <option>新患者</option>
+        <option>复发</option>
+        <option>返回</option>
+        <option>治疗失败</option>
+        <option>其他</option>
+    </select>
     <input id="regOtherInp" class="hide" placeholder="请详述">
 </div>
-<div class="item"><span class="label-fixed">5.13 开始治疗日期：</span><input type="date" id="startTreatDate"></div>
-<div class="item"><span class="label-fixed">5.14 治疗方案：</span><input type="text" id="treatPlan" placeholder="比如2HRSE/4HR"></div>
+<div class="item">
+    <span class="label-fixed">5.13 开始治疗日期：</span>
+    <input type="date" id="startTreatDate">
+</div>
+<div class="item">
+    <span class="label-fixed">5.14 治疗方案：</span>
+    <input type="text" id="treatPlan" placeholder="比如2HRSE/4HR">
+</div>
 <div class="item">
     <span class="label-fixed">5.15 目前治疗管理方式：</span>
     <select id="manageSel">
-        <option value="">请选择</option><option>休学住院治疗</option><option>休学本地居家治疗</option><option>休学回外地原籍治疗</option><option>未休学居家治疗</option><option>未休学在校治疗</option>
+        <option value="">请选择</option>
+        <option>休学住院治疗</option>
+        <option>休学本地居家治疗</option>
+        <option>休学回外地原籍治疗</option>
+        <option>未休学居家治疗</option>
+        <option>未休学在校治疗</option>
     </select>
     <span id="hospitalPart" class="hide">入院日期：<input type="date" id="inDate"></span>
     <span id="pausePart" class="hide">，休学开始日期：<input type="date" id="pauseDate"></span>
 </div>
 
 <h2>六、发病(<span id="section6-date">请选择诊断日期、首次症状日期</span>)后的生活和学习情况</h2>
-<div class="item"><span class="label-fixed">6.1 教室间数：</span><input type="number" id="classRoomNum" min="0" class="inp-char4"></div>
+<div class="item">
+    <span class="label-fixed">6.1 教室间数：</span>
+    <input type="number" id="classRoomNum" min="0" class="inp-char4">
+</div>
 <div id="classRoomWrap"></div>
-<div class="item"><span class="label-fixed">6.2 是否住读？</span><select id="liveInSchoolSel"><option>请选择</option><option>是</option><option>否</option></select></div>
-<div id="dormCountBox" class="item hide"><span class="label-fixed">宿舍个数：</span><input type="number" id="dormNum" min="0" class="inp-classnum"></div>
+
+<div class="item">
+    <span class="label-fixed">6.2 是否住读？</span>
+    <select id="liveInSchoolSel">
+        <option>请选择</option>
+        <option>是</option>
+        <option>否</option>
+    </select>
+</div>
+<div id="dormCountBox" class="item hide">
+    <span class="label-fixed">宿舍个数：</span>
+    <input type="number" id="dormNum" min="0" class="inp-classnum" placeholder="宿舍个数">
+</div>
 <div id="dormWrap"></div>
-<div class="item"><span class="label-fixed">6.3 家庭户数：</span><input type="number" id="homeCount" min="0" class="inp-char4"></div>
+
+<div class="item">
+    <span class="label-fixed">6.3 家庭户数：</span>
+    <input type="number" id="homeCount" min="0" class="inp-char4">
+</div>
 <div id="homeWrap"></div>
-<div class="item"><span class="label-fixed">6.4 带教老师：</span><input type="number" id="teacherCount" min="0" class="inp-classnum" placeholder="人数"></div>
+
+<!--6.4带教老师-->
+<div class="item">
+    <span class="label-fixed">6.4 带教老师：</span>
+    <input type="number" id="teacherCount" min="0" class="inp-classnum" placeholder="人数">
+</div>
 <div id="teacherWrap"></div>
-<div class="item"><span class="label-fixed">6.5 其他人员：</span><input type="number" id="otherCount" min="0" class="inp-classnum" placeholder="人数"></div>
+
+<!--新增6.5其他人员-->
+<div class="item">
+    <span class="label-fixed">6.5 其他人员：</span>
+    <input type="number" id="otherCount" min="0" class="inp-classnum" placeholder="人数">
+</div>
 <div id="otherWrap"></div>
 
-<div class="bottom-item item"><span class="label-fixed">调查人员：</span><input type="text" id="investUser"></div>
-<div class="bottom-item item"><span class="label-fixed">调查时间：</span><input type="date" id="investDate"></div>
+<!--调查人员、调查时间置于最底部-->
+<div class="bottom-item item">
+    <span class="label-fixed">调查人员：</span>
+    <input type="text" id="investUser" placeholder="填写调查人员姓名">
+</div>
+<div class="bottom-item item">
+    <span class="label-fixed">调查时间：</span>
+    <input type="date" id="investDate">
+</div>
 </div>
 
 <script>
+// 表头定义（全局统一）
 const excelHeader = [
     '记录ID','姓名','身份证号','职业','职业补充','性别','出生日期','年龄','现住址','户籍地址','学校名称','年级班级','班级人数','宿舍地址','同住室友数',
     '宿舍面积','开窗面积','宿舍通风','宿舍环境','家庭住址','住房面积','居家通风','居家环境','同住家庭成员数','既往结核史','首次结核年份','首次是否治疗','末次结核年份','末次是否治疗',
@@ -288,227 +610,456 @@ const excelHeader = [
     '涂片结果','培养结果','核酸结果','药敏结果','药敏备注','诊断性治疗','治疗备注','分型诊断','其他诊断备注','确诊日期','就诊医院','报卡日期','网报日期','登记日期','登记分类','分类备注',
     '起始治疗日','治疗方案','管理方式','入院日期','休学起始日','教室数量','住校否','宿舍数量','涉访家庭户数','老师人数','其他人员数','调查人','调查日期','填写时间'
 ];
+
+// 读取当前表单数据
 function getFormData(){
     return {
-        记录ID: new Date().getTime(),姓名:document.getElementById('name').value,身份证号:document.getElementById('idcard').value,职业:document.getElementById('job').value,职业补充:document.getElementById('jobOther').value,
-        性别:document.getElementById('sexShow').value,出生日期:document.getElementById('birthShow').value,年龄:document.getElementById('ageShow').value,现住址:document.getElementById('addrNow').value,户籍地址:document.getElementById('addrHome').value,
-        学校名称:document.getElementById('schoolName').value,年级班级:document.getElementById('className').value,班级人数:document.getElementById('classNum').value,宿舍地址:document.getElementById('dormAddr').value,同住室友数:document.getElementById('roomMateNum').value,
-        宿舍面积:document.getElementById('dormArea').value,开窗面积:document.getElementById('winArea').value,宿舍通风:document.getElementById('dormWind').value,宿舍环境:document.getElementById('dormEnv').value,家庭住址:document.getElementById('homeAddr').value,
-        住房面积:document.getElementById('homeArea').value,居家通风:document.getElementById('homeWindSel').value,居家环境:document.getElementById('homeEnv').value,同住家庭成员数:document.getElementById('liveCount').value,既往结核史:document.getElementById('tbHistory').value,
-        首次结核年份:document.getElementById('firstTbYear').value,首次是否治疗:document.getElementById('firstTbTreat').value,末次结核年份:document.getElementById('lastTbYear').value,末次是否治疗:document.getElementById('lastTbTreat').value,其他慢性病:document.getElementById('otherIll').value,
-        吸烟史:document.getElementById('smoke').value,密切结核患者:document.getElementById('contactSel').value,密接类型:document.getElementById('contactType').value,是否密接:document.getElementById('closeType').value,营养状况:document.getElementById('nutr').value,
-        睡眠情况:document.getElementById('sleep').value,压力情况:document.getElementById('press').value,临床症状:document.getElementById('symMainSel').value,首发症状日期:document.getElementById('firstSymDate').value,症状轻重:document.getElementById('symLevel').value,
-        就诊次数:document.getElementById('visitCountInp').value,发现方式:document.getElementById('findWaySel').value,发现备注:document.getElementById('findOtherInp').value,TST项目:document.getElementById('tbTestSel').value,PPD日期:document.getElementById('ppdDate').value,
-        PPD结果mm:document.getElementById('ppdRes').value,PPD皮损:document.getElementById('ppdSign').value,IGRA方法:document.getElementById('igraMethod').value,IGRA日期:document.getElementById('igraDate').value,IGRA结果:document.getElementById('igraRes').value,
-        胸片检查:document.getElementById('xraySel').value,胸片日期:document.getElementById('xDate').value,病变位置:document.getElementById('xPos').value,病灶类型:document.getElementById('xLesionSel').value,病原项目:document.getElementById('pathSel').value,标本类型:document.getElementById('specSel').value,
-        标本备注:document.getElementById('specOtherInp').value,涂片结果:document.getElementById('smearSel').value,培养结果:document.getElementById('cultSel').value,核酸结果:document.getElementById('pcrRes').value,药敏结果:document.getElementById('drugSel').value,药敏备注:document.getElementById('drugRemarkInp').value,
-        诊断性治疗:document.getElementById('treatSel').value,治疗备注:document.getElementById('treatInp').value,分型诊断:document.getElementById('diagSel').value,其他诊断备注:document.getElementById('diagOtherInp').value,确诊日期:document.getElementById('diagDate').value,
-        就诊医院:document.getElementById('hospitalName').value,报卡日期:document.getElementById('reportCardDate').value,网报日期:document.getElementById('netInputDate').value,登记日期:document.getElementById('regDate').value,登记分类:document.getElementById('regTypeSel').value,分类备注:document.getElementById('regOtherInp').value,
-        起始治疗日:document.getElementById('startTreatDate').value,治疗方案:document.getElementById('treatPlan').value,管理方式:document.getElementById('manageSel').value,入院日期:document.getElementById('inDate').value,休学起始日:document.getElementById('pauseDate').value,
-        教室数量:document.getElementById('classRoomNum').value,住校否:document.getElementById('liveInSchoolSel').value,宿舍数量:document.getElementById('dormNum').value,涉访家庭户数:document.getElementById('homeCount').value,老师人数:document.getElementById('teacherCount').value,其他人员数:document.getElementById('otherCount').value,
-        调查人:document.getElementById('investUser').value,调查日期:document.getElementById('investDate').value,填写时间:new Date().toLocaleString()
+        记录ID: new Date().getTime(),
+        姓名: document.getElementById('name').value,
+        身份证号: document.getElementById('idcard').value,
+        职业: document.getElementById('job').value,
+        职业补充: document.getElementById('jobOther').value,
+        性别: document.getElementById('sexShow').value,
+        出生日期: document.getElementById('birthShow').value,
+        年龄: document.getElementById('ageShow').value,
+        现住址: document.getElementById('addrNow').value,
+        户籍地址: document.getElementById('addrHome').value,
+        学校名称: document.getElementById('schoolName').value,
+        年级班级: document.getElementById('className').value,
+        班级人数: document.getElementById('classNum').value,
+        宿舍地址: document.getElementById('dormAddr').value,
+        同住室友数: document.getElementById('roomMateNum').value,
+        宿舍面积: document.getElementById('dormArea').value,
+        开窗面积: document.getElementById('winArea').value,
+        宿舍通风: document.getElementById('dormWind').value,
+        宿舍环境: document.getElementById('dormEnv').value,
+        家庭住址: document.getElementById('homeAddr').value,
+        住房面积: document.getElementById('homeArea').value,
+        居家通风: document.getElementById('homeWindSel').value,
+        居家环境: document.getElementById('homeEnv').value,
+        同住家庭成员数: document.getElementById('liveCount').value,
+        既往结核史: document.getElementById('tbHistory').value,
+        首次结核年份: document.getElementById('firstTbYear').value,
+        首次是否治疗: document.getElementById('firstTbTreat').value,
+        末次结核年份: document.getElementById('lastTbYear').value,
+        末次是否治疗: document.getElementById('lastTbTreat').value,
+        其他慢性病: document.getElementById('otherIll').value,
+        吸烟史: document.getElementById('smoke').value,
+        密切结核患者: document.getElementById('contactSel').value,
+        密接类型: document.getElementById('contactType').value,
+        是否密接: document.getElementById('closeType').value,
+        营养状况: document.getElementById('nutr').value,
+        睡眠情况: document.getElementById('sleep').value,
+        压力情况: document.getElementById('press').value,
+        临床症状: document.getElementById('symMainSel').value,
+        首发症状日期: document.getElementById('firstSymDate').value,
+        症状轻重: document.getElementById('symLevel').value,
+        就诊次数: document.getElementById('visitCountInp').value,
+        发现方式: document.getElementById('findWaySel').value,
+        发现备注: document.getElementById('findOtherInp').value,
+        TST项目: document.getElementById('tbTestSel').value,
+        PPD日期: document.getElementById('ppdDate').value,
+        PPD结果mm: document.getElementById('ppdRes').value,
+        PPD皮损: document.getElementById('ppdSign').value,
+        IGRA方法: document.getElementById('igraMethod').value,
+        IGRA日期: document.getElementById('igraDate').value,
+        IGRA结果: document.getElementById('igraRes').value,
+        胸片检查: document.getElementById('xraySel').value,
+        胸片日期: document.getElementById('xDate').value,
+        病变位置: document.getElementById('xPos').value,
+        病灶类型: document.getElementById('xLesionSel').value,
+        病原项目: document.getElementById('pathSel').value,
+        标本类型: document.getElementById('specSel').value,
+        标本备注: document.getElementById('specOtherInp').value,
+        涂片结果: document.getElementById('smearSel').value,
+        培养结果: document.getElementById('cultSel').value,
+        核酸结果: document.getElementById('pcrRes').value,
+        药敏结果: document.getElementById('drugSel').value,
+        药敏备注: document.getElementById('drugRemarkInp').value,
+        诊断性治疗: document.getElementById('treatSel').value,
+        治疗备注: document.getElementById('treatInp').value,
+        分型诊断: document.getElementById('diagSel').value,
+        其他诊断备注: document.getElementById('diagOtherInp').value,
+        确诊日期: document.getElementById('diagDate').value,
+        就诊医院: document.getElementById('hospitalName').value,
+        报卡日期: document.getElementById('reportCardDate').value,
+        网报日期: document.getElementById('netInputDate').value,
+        登记日期: document.getElementById('regDate').value,
+        登记分类: document.getElementById('regTypeSel').value,
+        分类备注: document.getElementById('regOtherInp').value,
+        起始治疗日: document.getElementById('startTreatDate').value,
+        治疗方案: document.getElementById('treatPlan').value,
+        管理方式: document.getElementById('manageSel').value,
+        入院日期: document.getElementById('inDate').value,
+        休学起始日: document.getElementById('pauseDate').value,
+        教室数量: document.getElementById('classRoomNum').value,
+        住校否: document.getElementById('liveInSchoolSel').value,
+        宿舍数量: document.getElementById('dormNum').value,
+        涉访家庭户数: document.getElementById('homeCount').value,
+        老师人数: document.getElementById('teacherCount').value,
+        其他人员数: document.getElementById('otherCount').value,
+        调查人: document.getElementById('investUser').value,
+        调查日期: document.getElementById('investDate').value,
+        填写时间: new Date().toLocaleString()
     };
 }
-function saveToHistory(d){let arr=JSON.parse(localStorage.getItem('tbCaseHistory')||'[]');arr.push(d);localStorage.setItem('tbCaseHistory',JSON.stringify(arr));}
-function getHistory(){return JSON.parse(localStorage.getItem('tbCaseHistory')||'[]');}
-function renderHistoryList(){
-    let arr = getHistory();
-    let listDom = document.getElementById('historyList');
-    if(arr.length===0){
-        listDom.innerHTML='<p>暂无历史记录</p>';
+
+// 保存到本地历史记录
+function saveToHistory(data){
+    let history = JSON.parse(localStorage.getItem('tbCaseHistory') || '[]');
+    history.push(data);
+    localStorage.setItem('tbCaseHistory', JSON.stringify(history));
+}
+
+// 读取所有历史记录
+function getHistory(){
+    return JSON.parse(localStorage.getItem('tbCaseHistory') || '[]');
+}
+
+// 清空表单
+document.getElementById('clearForm').onclick = function(){
+    if(confirm('确定要清空当前表单吗？')){
+        document.querySelectorAll('input, select').forEach(el=>{
+            el.value = '';
+        });
+        document.querySelectorAll('.hide').forEach(el=>{
+            el.classList.add('hide');
+        });
+    }
+};
+
+// 查看历史记录
+document.getElementById('viewHistory').onclick = function(){
+    let history = getHistory();
+    let modal = document.getElementById('historyModal');
+    let list = document.getElementById('historyList');
+    if(history.length === 0){
+        list.innerHTML = '<p>暂无历史记录</p>';
+    }else{
+        let html = `<table border="1" style="width:100%;border-collapse:collapse;">
+            <tr>${excelHeader.map(h=>`<th style="padding:4px;font-size:12px;">${h}</th>`).join('')}</tr>
+            ${history.map(row=>`<tr>${excelHeader.map(h=>`<td style="padding:4px;font-size:12px;">${row[h] || ''}</td>`).join('')}</tr>`).join('')}
+        </table>`;
+        list.innerHTML = html;
+    }
+    modal.style.display = 'flex';
+};
+
+// 关闭历史弹窗
+document.getElementById('historyClose').onclick = function(){
+    document.getElementById('historyModal').style.display = 'none';
+};
+
+// 导出Word
+document.getElementById('exportWord').onclick = function(){
+    let cloneDom = document.getElementById('printWrap').cloneNode(true);
+    let allInput = cloneDom.querySelectorAll('input');
+    allInput.forEach(inp=>{
+        let val = inp.value;
+        let txt = document.createTextNode(val||'');
+        inp.parentNode.replaceChild(txt,inp);
+    });
+    let allSel = cloneDom.querySelectorAll('select');
+    allSel.forEach(sel=>{
+        let txt = document.createTextNode(sel.value||'');
+        sel.parentNode.replaceChild(txt,sel);
+    });
+    let finalHtml = cloneDom.innerHTML;
+    let docBlob = htmlDocx.asBlob(`<html><body style="font-family:宋体;">${finalHtml}</body></html>`);
+    saveAs(docBlob,`肺结核个案调查表_${document.getElementById('name').value || '未命名'}.docx`);
+};
+
+// 保存到Excel汇总表
+document.getElementById('saveExcel').onclick = function(){
+    let currentData = getFormData();
+    if(!currentData.姓名 && !currentData.身份证号){
+        alert('请填写至少姓名和身份证号后再保存！');
         return;
     }
-    let tableHtml = `<table border=1 cellpadding=4 style="width:100%;border-collapse:collapse">
-    <tr><th><input type="checkbox" id="allCheck"></th>${excelHeader.map(h=>`<th>${h}</th>`).join('')}</tr>`;
-    arr.forEach((item,idx)=>{
-        tableHtml += `<tr>
-        <td><input class="rowCheck" type="checkbox" data-index="${idx}"></td>
-        ${excelHeader.map(k=>`<td>${item[k]||''}</td>`).join('')}
-        </tr>`;
-    });
-    tableHtml += '</table>';
-    listDom.innerHTML = tableHtml;
+    // 保存到本地历史
+    saveToHistory(currentData);
+    // 读取所有历史数据
+    let allHistory = getHistory();
+    // 生成Excel
+    let wb = XLSX.utils.book_new();
+    // 表头+所有数据
+    let rows = [
+        excelHeader,
+        ...allHistory.map(row=>excelHeader.map(h=>row[h] || ''))
+    ];
+    let ws = XLSX.utils.aoa_to_sheet(rows);
+    XLSX.utils.book_append_sheet(wb,ws,"肺结核个案汇总");
+    let buf = XLSX.write(wb,{bookType:'xlsx',type:'array'});
+    // 下载文件
+    saveAs(new Blob([buf],{type:"application/octet-stream"}),`肺结核个案汇总表_${new Date().toLocaleDateString().replace(/\//g,'-')}.xlsx`);
+    alert('保存成功！文件已生成，可选择保存到你的指定本地文件夹');
+};
+
+// 身份证自动带出年龄性别
+const idcard = document.getElementById('idcard');
+const infoDom = document.getElementById('sexAgeInfo');
+const birthDom = document.getElementById('birthShow');
+const sexDom = document.getElementById('sexShow');
+const ageDom = document.getElementById('ageShow');
+idcard.oninput = function(){
+    let id = this.value.trim();
+    infoDom.innerText = '';
+    birthDom.value = '';sexDom.value='';ageDom.value='';
+    if(id.length!==18) return;
+    let birthStr = id.substring(6,10)+'-'+id.substring(10,12)+'-'+id.substring(12,14);
+    let sexNo = parseInt(id[16]);
+    let sex = sexNo%2===1 ? '男' : '女';
+    let birth = new Date(birthStr);
+    let now = new Date();
+    let age = now.getFullYear()-birth.getFullYear();
+    if(now.getMonth()<birth.getMonth() || (now.getMonth()===birth.getMonth()&&now.getDate()<birth.getDate())) age--;
+    infoDom.innerText = `性别：${sex}，年龄：${age}岁`;
+    birthDom.value = birthStr;
+    sexDom.value = sex;
+    ageDom.value = age;
 }
 
-// 基础按钮
-document.getElementById('clearForm').onclick=function(){
-    if(!confirm('清空当前表单？'))return;
-    document.querySelectorAll('input,select').forEach(i=>i.value='');
-    document.querySelectorAll('.hide').forEach(i=>i.classList.add('hide'));
-    ['familyWrap','homeWrap','teacherWrap','otherWrap','visitWrap'].forEach(id=>document.getElementById(id).innerHTML='');
-};
-document.getElementById('saveItem').onclick=function(){
-    let d=getFormData();
-    if(!d.姓名&&!d.身份证号){alert('姓名/身份证至少填一项');return;}
-    saveToHistory(d);alert('本条保存完毕，可继续录入');document.getElementById('clearForm').click();
-};
-document.getElementById('exportAllExcel').onclick=function(){
-    let arr=getHistory();
-    if(arr.length==0){alert('无保存数据');return;}
-    let wb=XLSX.utils.book_new();
-    let rows=[excelHeader,...arr.map(r=>excelHeader.map(k=>r[k]||''))];
-    let ws=XLSX.utils.aoa_to_sheet(rows);
-    XLSX.utils.book_append_sheet(wb,ws,'汇总');
-    let buf=XLSX.write(wb,{bookType:'xlsx',type:'array'});
-    saveAs(new Blob([buf]),`肺结核汇总_${new Date().toLocaleDateString().replace(/\//g,'-')}.xlsx`);
-};
-document.getElementById('viewHistory').onclick=function(){
-    renderHistoryList();
-    document.getElementById('historyModal').style.display='flex';
-};
-document.getElementById('clearHistory').onclick=function(){
-    renderHistoryList();
-    document.getElementById('historyModal').style.display='flex';
-};
-document.getElementById('historyClose').onclick=()=>document.getElementById('historyModal').style.display='none';
-
-// 历史弹窗操作：全选、反选、删选中、清空全部
-document.getElementById('selectAll').onclick=()=>{
-    document.querySelectorAll('.rowCheck').forEach(cb=>cb.checked=true);
-    document.getElementById('allCheck').checked=true;
-};
-document.getElementById('invertSelect').onclick=()=>{
-    document.querySelectorAll('.rowCheck').forEach(cb=>cb.checked=!cb.checked);
-};
-document.getElementById('delAll').onclick=function(){
-    if(!confirm('确定清空全部历史记录？删除无法恢复！'))return;
-    localStorage.removeItem('tbCaseHistory');
-    renderHistoryList();
-};
-document.getElementById('delConfirm').onclick=function(){
-    let arr = getHistory();
-    let delIndexList = [];
-    document.querySelectorAll('.rowCheck:checked').forEach(cb=>{
-        delIndexList.push(Number(cb.dataset.index));
-    });
-    if(delIndexList.length===0){alert('未勾选任何数据');return;}
-    if(!confirm(`选中${delIndexList.length}条，确认删除？`))return;
-    // 过滤保留未勾选
-    let newList = arr.filter((_,idx)=>!delIndexList.includes(idx));
-    localStorage.setItem('tbCaseHistory',JSON.stringify(newList));
-    renderHistoryList();
-    alert('删除完成');
+// 同住人数动态新增行
+const liveCount=document.getElementById('liveCount');
+const familyWrap=document.getElementById('familyWrap');
+liveCount.oninput=function(){
+    let n=Number(this.value)||0;
+    familyWrap.innerHTML='';
+    for(let i=1;i<=n;i++){
+        let div=document.createElement('div');
+        div.className='family-row';
+        div.innerHTML=`<span>同住${i}：</span><input class="inp-name8" placeholder="关系+姓名"><span>，性别</span><select class="inp-sex3"><option>请选择</option><option>男</option><option>女</option></select><span>，年龄(岁)</span><input class="inp-char4"><span>，电话号码</span><input class="inp-tel19"><span>，备注</span><input placeholder="">`;
+        familyWrap.appendChild(div);
+    }
 };
 
-//导出Word
-document.getElementById('exportWord').onclick=function(){
-    let wrap=document.getElementById('printWrap').cloneNode(true);
-    wrap.querySelectorAll('input').forEach(inp=>{
-        let s=document.createElement('span');s.style.textDecoration='underline';s.textContent=inp.value||'';inp.parentNode.replaceChild(s,inp);
-    });
-    wrap.querySelectorAll('select').forEach(sel=>{
-        let s=document.createElement('span');s.style.textDecoration='underline';s.textContent=sel.value||'';sel.parentNode.replaceChild(s,sel);
-    });
-    let html=`
-    <html>
-    <head>
-    <style>
-    body{font-family:宋体;font-size:12pt;line-height:1.5;}
-    h1{font-family:黑体;font-size:18pt;text-align:center;}
-    h2{font-family:黑体;font-size:12pt;}
-    div,p{font-family:宋体;font-size:12pt;line-height:1.5;}
-    </style>
-    </head>
-    <body>${wrap.innerHTML}</body></html>`;
-    saveAs(htmlDocx.asBlob(html),`${document.getElementById('name').value||'个案'}.docx`);
+// 家庭户数动态新增行
+const homeCount=document.getElementById('homeCount');
+const homeWrap=document.getElementById('homeWrap');
+homeCount.oninput=function(){
+    let num=Number(this.value)||0;
+    homeWrap.innerHTML='';
+    for(let i=1;i<=num;i++){
+        let div=document.createElement('div');
+        div.className='home-row';
+        div.innerHTML=`<span>家庭${i}：</span><input placeholder="家中或其他具体地址"><span>起始日期</span><input type="date"><span>终止日期</span><input type="date"><input class="inp-dayweek15" placeholder="居住频率(天/周)"><span>家庭成员</span><input placeholder="注明人名及人数">`;
+        homeWrap.appendChild(div);
+    }
 };
 
-//身份证自动
-document.getElementById('idcard').oninput=function(){
-    let v=this.value.trim();
-    document.getElementById('sexAgeInfo').textContent='';
-    ['sexShow','birthShow','ageShow'].forEach(id=>document.getElementById(id).value='');
-    if(v.length!=18)return;
-    let birth=v.slice(6,10)+'-'+v.slice(10,12)+'-'+v.slice(12,14);
-    let sex=Number(v[16])%2?'男':'女';
-    let bd=new Date(birth),now=new Date();
-    let age=now.getFullYear()-bd.getFullYear();
-    if(now.getMonth()<bd.getMonth()||(now.getMonth()==bd.getMonth()&&now.getDate()<bd.getDate()))age--;
-    document.getElementById('sexAgeInfo').textContent=`性别：${sex}，年龄：${age}岁`;
-    document.getElementById('sexShow').value=sex;
-    document.getElementById('birthShow').value=birth;
-    document.getElementById('ageShow').value=age;
-};
-//动态行
-document.getElementById('liveCount').oninput=function(){
-    let n=+this.value||0,wrap=document.getElementById('familyWrap');wrap.innerHTML='';
-    for(let i=1;i<=n;i++)wrap.innerHTML+=`<div class="family-row"><span>同住${i}：</span><input class="inp-name8"><span>性别</span><select class="inp-sex3"><option>男</option><option>女</option></select><span>年龄</span><input class="inp-char4"><span>电话</span><input class="inp-tel19"><span>备注</span><input></div>`;
-};
-document.getElementById('homeCount').oninput=function(){
-    let n=+this.value||0,wrap=document.getElementById('homeWrap');wrap.innerHTML='';
-    for(let i=1;i<=n;i++)wrap.innerHTML+=`<div class="home-row"><span>家庭${i}：</span><input><span>起止</span><input type=date><input type=date><input class="inp-dayweek15" placeholder="居住频率"><span>同住人</span><input></div>`;
-};
-document.getElementById('teacherCount').oninput=function(){
-    let n=+this.value||0,wrap=document.getElementById('teacherWrap');wrap.innerHTML='';
-    for(let i=1;i<=n;i++)wrap.innerHTML+=`<div class="teacher-row"><span>老师${i}</span><input><input type=date><input type=date><input class="inp-teacherfreq"><input></div>`;
-};
-document.getElementById('otherCount').oninput=function(){
-    let n=+this.value||0,wrap=document.getElementById('otherWrap');wrap.innerHTML='';
-    for(let i=1;i<=n;i++)wrap.innerHTML+=`<div class="other-row"><span>其他${i}</span><input class="inp-otherjob"><input type=date><input type=date><input class="inp-otherfreq"><input class="inp-othername"></div>`;
-};
-document.getElementById('visitCountInp').oninput=function(){
-    let n=+this.value||0,wrap=document.getElementById('visitWrap');wrap.innerHTML='';
-    for(let i=1;i<=n;i++)wrap.innerHTML+=`<div class="item"><span class="label-fixed">第${i}次就诊</span><input type=date><input><input><input><input></div>`;
+// 带教老师动态生成
+const teacherCount=document.getElementById('teacherCount');
+const teacherWrap=document.getElementById('teacherWrap');
+teacherCount.oninput=function(){
+    let tNum=Number(this.value)||0;
+    teacherWrap.innerHTML='';
+    for(let i=1;i<=tNum;i++){
+        let tr=document.createElement('div');
+        tr.className='teacher-row';
+        tr.innerHTML=`<span>老师${i}：</span><input placeholder="如：语文"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-teacherfreq" placeholder="上课频率(天/周)"><span>老师姓名：</span><input placeholder="注明人名">`;
+        teacherWrap.appendChild(tr);
+    }
 };
 
-//下拉联动
-document.getElementById('job').onchange=()=>document.getElementById('otherJobBox').classList.toggle('hide',document.getElementById('job').value!='其他');
-document.getElementById('tbHistory').onchange=()=>document.getElementById('tbDetailBox').style.display=document.getElementById('tbHistory').value=='有'?'block':'none';
-document.getElementById('contactSel').onchange=()=>document.getElementById('contactWrap').style.display=document.getElementById('contactSel').value=='有'?'inline':'none';
-document.getElementById('findWaySel').onchange=()=>document.getElementById('findOtherInp').classList.toggle('hide',document.getElementById('findWaySel').value!='其他');
-document.getElementById('tbTestSel').onchange=function(){
-    document.getElementById('ppdWrap').classList.add('hide');document.getElementById('igraWrap').classList.add('hide');
-    if(this.value=='结核菌素皮肤试验')document.getElementById('ppdWrap').classList.remove('hide');
-    if(this.value=='γ干扰素释放试验')document.getElementById('igraWrap').classList.remove('hide');
-};
-document.getElementById('xraySel').onchange=()=>document.getElementById('xrayWrap').classList.toggle('hide',['左肺','右肺'].indexOf(document.getElementById('xraySel').value)===-1);
-document.getElementById('specSel').onchange=()=>document.getElementById('specOtherInp').classList.toggle('hide',document.getElementById('specSel').value!='其他');
-document.getElementById('drugSel').onchange=()=>document.getElementById('drugRemarkInp').classList.toggle('hide',['耐药','敏感'].indexOf(document.getElementById('drugSel').value)===-1);
-document.getElementById('pathSel').onchange=function(){
-    ['itemSmear','itemCult','itemPcr','itemDrug'].forEach(id=>document.getElementById(id).classList.add('hide'));
-    let v=this.value;
-    if(v=='①涂片')document.getElementById('itemSmear').classList.remove('hide');
-    if(v=='②培养')document.getElementById('itemCult').classList.remove('hide');
-    if(v=='③分生')document.getElementById('itemPcr').classList.remove('hide');
-    if(v=='④药敏')document.getElementById('itemDrug').classList.remove('hide');
-    if(v=='多项')['itemSmear','itemCult','itemPcr','itemDrug'].forEach(id=>document.getElementById(id).classList.remove('hide'));
-};
-document.getElementById('treatSel').onchange=()=>document.getElementById('treatInp').classList.toggle('hide',['抗炎','抗结核'].indexOf(document.getElementById('treatSel').value)===-1);
-document.getElementById('diagSel').onchange=()=>document.getElementById('diagOtherInp').classList.toggle('hide',document.getElementById('diagSel').value!='其他');
-document.getElementById('regTypeSel').onchange=()=>document.getElementById('regOtherInp').classList.toggle('hide',document.getElementById('regTypeSel').value!='其他');
-document.getElementById('liveInSchoolSel').onchange=()=>document.getElementById('dormCountBox').classList.toggle('hide',document.getElementById('liveInSchoolSel').value!='是');
-document.getElementById('manageSel').onchange=function(){
-    document.getElementById('hospitalPart').classList.add('hide');document.getElementById('pausePart').classList.add('hide');
-    if(this.value.indexOf('住院')>-1)document.getElementById('hospitalPart').classList.remove('hide');
-    if(this.value.indexOf('休学')>-1)document.getElementById('pausePart').classList.remove('hide');
+// 其他人员动态生成
+const otherCount=document.getElementById('otherCount');
+const otherWrap=document.getElementById('otherWrap');
+otherCount.oninput=function(){
+    let oNum=Number(this.value)||0;
+    otherWrap.innerHTML='';
+    for(let i=1;i<=oNum;i++){
+        let or=document.createElement('div');
+        or.className='other-row';
+        or.innerHTML=`<span>其他${i}：</span><input class="inp-otherjob" placeholder="如：宿管"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-otherfreq" placeholder="接触频率(天/周)"><input class="inp-othername" placeholder="人员姓名">`;
+        otherWrap.appendChild(or);
+    }
 };
 
+// 诊断日期联动计算
+const diagDate=document.getElementById('diagDate');
+const firstSymDate=document.getElementById('firstSymDate');
+const section6Date=document.getElementById('section6-date');
 function updateSectionDate(){
-    let d1=document.getElementById('diagDate').value,d2=document.getElementById('firstSymDate').value;
-    if(!d1){document.getElementById('section6-date').innerText='请选择诊断日期、首次症状日期';return;}
-    let dt=new Date(d1);dt.setMonth(dt.getMonth()-3);let sub3=dt.toISOString().split('T')[0];
-    document.getElementById('section6-date').innerText=d2?(new Date(sub3)>new Date(d2)?d2:sub3):sub3;
+    let d1=diagDate.value;
+    let d2=firstSymDate.value;
+    if(!d1){
+        section6Date.innerText='请选择诊断日期、首次症状日期';
+        return;
+    }
+    let dtDiag=new Date(d1);
+    dtDiag.setMonth(dtDiag.getMonth()-3);
+    let dateSub3 = dtDiag.toISOString().split('T')[0];
+    if(!d2){
+        section6Date.innerText = dateSub3;
+    }else{
+        section6Date.innerText = new Date(dateSub3) > new Date(d2) ? d2 : dateSub3;
+    }
 }
-document.getElementById('diagDate').onchange=updateSectionDate;
-document.getElementById('firstSymDate').onchange=updateSectionDate;
+diagDate.onchange=updateSectionDate;
+firstSymDate.onchange=updateSectionDate;
 
-document.getElementById('symMainSel').onchange=function(){
-    let v=this.value;
-    document.getElementById('symRemarkInp').classList.add('hide');
-    document.getElementById('dateWrap').classList.add('hide');
-    document.getElementById('severityItem').classList.add('hide');
-    document.getElementById('symBoxAll').style.display='none';
-    document.getElementById('visitWrap').innerHTML='';document.getElementById('visitCountInp').value='';
-    if(v!=''){
-        document.getElementById('symBoxAll').style.display='block';
-        if(v!='无症状'){
-            document.getElementById('dateWrap').classList.remove('hide');
-            document.getElementById('severityItem').classList.remove('hide');
-            if(v=='⑪以上多种症状'){document.getElementById('symRemarkInp').classList.remove('hide');document.getElementById('symRemarkInp').placeholder='编号如1、3';}
-            if(v=='⑫其他'){document.getElementById('symRemarkInp').classList.remove('hide');document.getElementById('symRemarkInp').placeholder='填写具体症状';}
+// 职业其他展开
+const jobSel = document.getElementById('job');
+const otherBox = document.getElementById('otherJobBox');
+jobSel.onchange = ()=> otherBox.classList.toggle('hide', jobSel.value !== '其他');
+
+// 既往结核病史展开
+const tbSel = document.getElementById('tbHistory');
+const tbBox = document.getElementById('tbDetailBox');
+tbSel.onchange = ()=> tbBox.style.display = tbSel.value==='有'?'block':'none';
+
+// 接触史详情
+const contactSel = document.getElementById('contactSel');
+const contactWrap = document.getElementById('contactWrap');
+contactSel.onchange = ()=> contactWrap.style.display = contactSel.value==='有'?'inline':'none';
+
+// 有无症状逻辑
+const symMainSel = document.getElementById('symMainSel');
+const symRemarkInp = document.getElementById('symRemarkInp');
+const dateWrap = document.getElementById('dateWrap');
+const symBoxAll = document.getElementById('symBoxAll');
+const severityItem = document.getElementById('severityItem');
+const visitCountInp = document.getElementById('visitCountInp');
+const visitWrap = document.getElementById('visitWrap');
+symMainSel.onchange = function(){
+    let val = this.value;
+    symRemarkInp.classList.add('hide');
+    dateWrap.classList.add('hide');
+    severityItem.classList.add('hide');
+    symBoxAll.style.display='none';
+    visitWrap.innerHTML='';
+    visitCountInp.value='';
+
+    if(val === '无症状'){
+        symBoxAll.style.display='block';
+    }else if(val !== ''){
+        dateWrap.classList.remove('hide');
+        severityItem.classList.remove('hide');
+        symBoxAll.style.display='block';
+        if(val === '⑪以上多种症状'){
+            symRemarkInp.classList.remove('hide');
+            symRemarkInp.placeholder='填编号，如1、2、5';
+        }else if(val === '⑫其他'){
+            symRemarkInp.classList.remove('hide');
+            symRemarkInp.placeholder='写明症状';
         }
     }
     updateSectionDate();
+};
+
+// 就医次数动态新增行
+visitCountInp.oninput = function(){
+    let num = Number(this.value)||0;
+    visitWrap.innerHTML='';
+    for(let i=1;i<=num;i++){
+        let div=document.createElement('div');
+        div.className='item';
+        div.innerHTML=`<span class="label-fixed">第${i}次就诊：</span><input type="date"><input placeholder="就诊主要原因"><input placeholder="就诊单位名称"><input placeholder="病名/诊断未明/转诊情况"><input placeholder="使用的药品">`;
+        visitWrap.appendChild(div);
+    }
+};
+
+// 发现方式其他
+const findWaySel = document.getElementById('findWaySel');
+const findOtherInp = document.getElementById('findOtherInp');
+findWaySel.onchange = ()=> findOtherInp.classList.toggle('hide',findWaySel.value!=='其他');
+
+// TST项目切换
+const tbTestSel = document.getElementById('tbTestSel');
+const ppdWrap = document.getElementById('ppdWrap');
+const igraWrap = document.getElementById('igraWrap');
+tbTestSel.onchange = function(){
+    ppdWrap.classList.add('hide');igraWrap.classList.add('hide');
+    if(this.value==='结核菌素皮肤试验') ppdWrap.classList.remove('hide');
+    if(this.value==='γ干扰素释放试验') igraWrap.classList.remove('hide');
+};
+
+// 胸片展开
+const xraySel = document.getElementById('xraySel');
+const xrayWrap = document.getElementById('xrayWrap');
+xraySel.onchange = ()=> xrayWrap.classList.toggle('hide',!(this.value==='左肺'||this.value==='右肺'));
+
+// 病原学项目展开
+const pathSel = document.getElementById('pathSel');
+const specSel = document.getElementById('specSel');
+const specOtherInp = document.getElementById('specOtherInp');
+const itemSmear = document.getElementById('itemSmear');
+const itemCult = document.getElementById('itemCult');
+const itemPcr = document.getElementById('itemPcr');
+const itemDrug = document.getElementById('itemDrug');
+const drugSel = document.getElementById('drugSel');
+const drugRemarkInp = document.getElementById('drugRemarkInp');
+specSel.onchange = ()=> specOtherInp.classList.toggle('hide', specSel.value !== '其他');
+drugSel.onchange = ()=> drugRemarkInp.classList.toggle('hide',!(drugSel.value==='耐药'||drugSel.value==='敏感'));
+pathSel.onchange = function(){
+    itemSmear.classList.add('hide');itemCult.classList.add('hide');itemPcr.classList.add('hide');itemDrug.classList.add('hide');drugRemarkInp.classList.add('hide');
+    let val=this.value;
+    if(val==='①涂片') itemSmear.classList.remove('hide');
+    if(val==='②培养') itemCult.classList.remove('hide');
+    if(val==='③分生') itemPcr.classList.remove('hide');
+    if(val==='④药敏') itemDrug.classList.remove('hide');
+    if(val==='多项'){
+        itemSmear.classList.remove('hide');itemCult.classList.remove('hide');itemPcr.classList.remove('hide');itemDrug.classList.remove('hide');
+    }
+};
+
+// 治疗其他
+const treatSel = document.getElementById('treatSel');
+const treatInp = document.getElementById('treatInp');
+treatSel.onchange = ()=> treatInp.classList.toggle('hide',!(treatSel.value==='抗炎'||treatSel.value==='抗结核'));
+
+// 诊断其他
+const diagSel = document.getElementById('diagSel');
+const diagOtherInp = document.getElementById('diagOtherInp');
+diagSel.onchange = ()=> diagOtherInp.classList.toggle('hide',diagSel.value!=='其他');
+
+// 分类其他
+const regTypeSel = document.getElementById('regTypeSel');
+const regOtherInp = document.getElementById('regOtherInp');
+regTypeSel.onchange = ()=> regOtherInp.classList.toggle('hide',regTypeSel.value!=='其他');
+
+// 治疗管理方式
+const manageSel = document.getElementById('manageSel');
+const hospitalPart = document.getElementById('hospitalPart');
+const pausePart = document.getElementById('pausePart');
+manageSel.onchange = function(){
+    hospitalPart.classList.add('hide');pausePart.classList.add('hide');
+    if(manageSel.value==='休学住院治疗'){hospitalPart.classList.remove('hide');pausePart.classList.remove('hide');}
+    if(manageSel.value==='休学本地居家治疗'||manageSel.value==='休学回外地原籍治疗') pausePart.classList.remove('hide');
+};
+
+// 教室动态行
+const classRoomNum = document.getElementById('classRoomNum');
+const classRoomWrap = document.getElementById('classRoomWrap');
+classRoomNum.oninput = function(){
+    let n = Number(this.value)||0;
+    classRoomWrap.innerHTML = '';
+    for(let i=1;i<=n;i++){
+        let div = document.createElement('div');
+        div.className = 'class-row';
+        div.innerHTML = `<span>教室${i}：</span><input placeholder="教学楼+楼层+教室编号"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-classhour18" placeholder="上课频次(小时/周)"><span>同班学生：</span><input class="inp-classnum" placeholder="人数"><span>同楼层：</span><input placeholder="教室号">`;
+        classRoomWrap.appendChild(div);
+    }
+};
+
+// 宿舍动态行
+const liveInSchoolSel=document.getElementById('liveInSchoolSel');
+const dormCountBox=document.getElementById('dormCountBox');
+const dormNum=document.getElementById('dormNum');
+const dormWrap=document.getElementById('dormWrap');
+liveInSchoolSel.onchange=()=>{
+    dormWrap.innerHTML='';dormNum.value='';
+    dormCountBox.classList.toggle('hide',liveInSchoolSel.value!=='是');
+};
+dormNum.oninput=function(){
+    let n=Number(this.value)||0;
+    dormWrap.innerHTML='';
+    for(let i=1;i<=n;i++){
+        let div=document.createElement('div');
+        div.className='dorm-row';
+        div.innerHTML=`<span>宿舍${i}：</span><input class="inp-dormaddr" placeholder="楼栋+楼层+房号"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-dayweek15" placeholder="住宿天数(天/周)"><span>同室：</span><input class="inp-classnum" placeholder="人数"><span>同楼层：</span><input placeholder="宿舍号">`;
+        dormWrap.appendChild(div);
+    }
 };
 </script>
 </body>
