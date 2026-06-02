@@ -1,10 +1,3 @@
-<script>
-// 手机+电脑共用访问密码
-let pass = prompt('请输入调查表访问密码');
-if(pass !== '82424520@'){
-    document.body.innerHTML = '<h3>密码错误，禁止打开调查表</h3>';
-}
-</script>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -102,12 +95,15 @@ table{font-size:12px;}
     <button id="clearHistory">清空全部历史</button>
     <button id="exportWord">导出Word</button>
     <button id="saveExcel">保存到Excel汇总表</button>
+    <!-- 新增导入按钮、隐藏文件框 -->
+    <button type="button" id="importExcel">导入Excel</button>
+    <input type="file" id="excelFileInput" accept=".xlsx,.xls" style="display:none;">
 </div>
 
 <!-- 历史记录弹窗 -->
 <div id="historyModal">
     <div id="historyContent">
-        <h3>历史填写记录</h3>
+       <h3>历史填写记录（点击编辑载入表单修改）</h3>
         <div id="historyList"></div>
         <button id="historyClose">关闭</button>
     </div>
@@ -115,6 +111,17 @@ table{font-size:12px;}
 
 <div id="printWrap">
 <h1>学校肺结核患者个案调查表</h1>
+
+<!-- 【修改处：原复选框改为下拉框】 -->
+<div class="case-type-row" style="margin:12px 0; font-family:宋体; font-size:12pt;">
+    病例分类：
+    <select id="caseTypeSel">
+        <option value="">请选择</option>
+        <option value="确诊病例">确诊病例</option>
+        <option value="临床诊断病例">临床诊断病例</option>
+    </select>
+</div>
+
 <h2>一、一般情况</h2>
 
 <div class="item no-gap item-col">
@@ -357,7 +364,7 @@ table{font-size:12px;}
 
 <div id="symBoxAll" class="hide">
     <div class="item" id="severityItem">
-        <span class="label-fixed">4.1 自我感觉症状的严重程度：</span>
+        <span class="label-fixed">4.2 自我感觉症状的严重程度：</span>
         <select id="symLevel">
             <option>请选择</option>
             <option>轻</option>
@@ -366,7 +373,7 @@ table{font-size:12px;}
         </select>
     </div>
     <div class="item">
-        <span class="label-fixed">4.2 就医次数：</span>
+        <span class="label-fixed">4.3 就医次数：</span>
         <input type="number" id="visitCountInp" min="0" class="inp-count6" placeholder="填写数字">
     </div>
     <div id="visitWrap"></div>
@@ -616,20 +623,36 @@ table{font-size:12px;}
 </div>
 
 <script>
-// 表头定义（全局统一）
+// 表头定义（全局统一，与导出Excel表头完全一致）
 const excelHeader = [
+    '病例分类',
     '记录ID','姓名','身份证号','职业','职业补充','性别','出生日期','年龄','现住址','户籍地址','学校名称','年级班级','班级人数','宿舍地址','同住室友数',
     '宿舍面积','开窗面积','宿舍通风','宿舍环境','家庭住址','住房面积','居家通风','居家环境','同住家庭成员数','既往结核史','首次结核年份','首次是否治疗','末次结核年份','末次是否治疗',
     '其他慢性病','吸烟史','密切结核患者','密接类型','是否密接','营养状况','睡眠情况','压力情况','临床症状','首发症状日期','症状轻重','就诊次数','发现方式','发现备注',
     'TST项目','PPD日期','PPD结果mm','PPD皮损','IGRA方法','IGRA日期','IGRA结果','胸片检查','胸片日期','病变位置','病灶类型','病原项目','标本类型','标本备注',
     '涂片结果','培养结果','核酸结果','药敏结果','药敏备注','诊断性治疗','治疗备注','分型诊断','其他诊断备注','确诊日期','就诊医院','报卡日期','网报日期','登记日期','登记分类','分类备注',
-    '起始治疗日','治疗方案','管理方式','入院日期','休学起始日','教室数量','住校否','宿舍数量','涉访家庭户数','老师人数','其他人员数','调查人','调查日期','填写时间'
+    '起始治疗日','治疗方案','管理方式','入院日期','休学起始日','教室数量','住校否','宿舍数量','涉访家庭户数','老师人数','其他人员数','调查人','调查日期','填写时间',
+    '家属详情','就诊详情','教室详情','宿舍详情','家庭详情','老师详情','其他人员详情'
 ];
+// 全局缓存当前正在编辑的记录ID，为空代表新增
+let editRecordId = null;
 
-// 读取当前表单数据
+// 读取当前表单数据【新增所有动态行JSON序列化存储】
 function getFormData(){
+    // 收集动态多行数据
+    const getDomArr = wrapSel=>{
+        let arr = [];
+        document.querySelectorAll(`${wrapSel} > div`).forEach(d=>{
+            let item = [];
+            d.querySelectorAll('input,select').forEach(i=>item.push(i.value.trim()));
+            arr.push(item.join('|'));
+        })
+        return arr.join('@');
+    }
     return {
-        记录ID: new Date().getTime(),
+        //【修改取值：从下拉框拿值】
+        病例分类:document.getElementById('caseTypeSel').value,
+        记录ID: editRecordId||new Date().getTime(),
         姓名: document.getElementById('name').value,
         身份证号: document.getElementById('idcard').value,
         职业: document.getElementById('job').value,
@@ -715,14 +738,164 @@ function getFormData(){
         其他人员数: document.getElementById('otherCount').value,
         调查人: document.getElementById('investUser').value,
         调查日期: document.getElementById('investDate').value,
-        填写时间: new Date().toLocaleString()
+        填写时间: new Date().toLocaleString(),
+        // 动态明细字段
+        家属详情:getDomArr('#familyWrap'),
+        就诊详情:getDomArr('#visitWrap'),
+        教室详情:getDomArr('#classRoomWrap'),
+        宿舍详情:getDomArr('#dormWrap'),
+        家庭详情:getDomArr('#homeWrap'),
+        老师详情:getDomArr('#teacherWrap'),
+        其他人员详情:getDomArr('#otherWrap')
     };
 }
 
-// 保存到本地历史记录
+// 回填历史数据到表单（兼容导入Excel数据）
+function fillFormByData(data){
+    editRecordId = data.记录ID;
+    //【下拉框回填】
+    document.getElementById('caseTypeSel').value = data.病例分类 || '';
+
+    document.getElementById('name').value = data.姓名 || '';
+    document.getElementById('idcard').value = data.身份证号 || '';
+    document.getElementById('job').value = data.职业 || '';
+    document.getElementById('jobOther').value = data.职业补充 || '';
+    document.getElementById('sexShow').value = data.性别 || '';
+    document.getElementById('birthShow').value = data.出生日期 || '';
+    document.getElementById('ageShow').value = data.年龄 || '';
+    document.getElementById('addrNow').value = data.现住址 || '';
+    document.getElementById('addrHome').value = data.户籍地址 || '';
+    document.getElementById('schoolName').value = data.学校名称 || '';
+    document.getElementById('className').value = data.年级班级 || '';
+    document.getElementById('classNum').value = data.班级人数 || '';
+    document.getElementById('dormAddr').value = data.宿舍地址 || '';
+    document.getElementById('roomMateNum').value = data.同住室友数 || '';
+    document.getElementById('dormArea').value = data.宿舍面积 || '';
+    document.getElementById('winArea').value = data.开窗面积 || '';
+    document.getElementById('dormWind').value = data.宿舍通风 || '';
+    document.getElementById('dormEnv').value = data.宿舍环境 || '';
+    document.getElementById('homeAddr').value = data.家庭住址 || '';
+    document.getElementById('homeArea').value = data.住房面积 || '';
+    document.getElementById('homeWindSel').value = data.居家通风 || '';
+    document.getElementById('homeEnv').value = data.居家环境 || '';
+    document.getElementById('liveCount').value = data.同住家庭成员数 || '';
+    document.getElementById('tbHistory').value = data.既往结核史 || '';
+    document.getElementById('firstTbYear').value = data.首次结核年份 || '';
+    document.getElementById('firstTbTreat').value = data.首次是否治疗 || '';
+    document.getElementById('lastTbYear').value = data.末次结核年份 || '';
+    document.getElementById('lastTbTreat').value = data.末次是否治疗 || '';
+    document.getElementById('otherIll').value = data.其他慢性病 || '';
+    document.getElementById('smoke').value = data.吸烟史 || '';
+    document.getElementById('contactSel').value = data.密切结核患者 || '';
+    document.getElementById('contactType').value = data.密接类型 || '';
+    document.getElementById('closeType').value = data.是否密接 || '';
+    document.getElementById('nutr').value = data.营养状况 || '';
+    document.getElementById('sleep').value = data.睡眠情况 || '';
+    document.getElementById('press').value = data.压力情况 || '';
+    document.getElementById('symMainSel').value = data.临床症状 || '';
+    document.getElementById('firstSymDate').value = data.首发症状日期 || '';
+    document.getElementById('symLevel').value = data.症状轻重 || '';
+    document.getElementById('visitCountInp').value = data.就诊次数 || '';
+    document.getElementById('findWaySel').value = data.发现方式 || '';
+    document.getElementById('findOtherInp').value = data.发现备注 || '';
+    document.getElementById('tbTestSel').value = data.TST项目 || '';
+    document.getElementById('ppdDate').value = data.PPD日期 || '';
+    document.getElementById('ppdRes').value = data.PPD结果mm || '';
+    document.getElementById('ppdSign').value = data.PPD皮损 || '';
+    document.getElementById('igraMethod').value = data.IGRA方法 || '';
+    document.getElementById('igraDate').value = data.IGRA日期 || '';
+    document.getElementById('igraRes').value = data.IGRA结果 || '';
+    document.getElementById('xraySel').value = data.胸片检查 || '';
+    document.getElementById('xDate').value = data.胸片日期 || '';
+    document.getElementById('xPos').value = data.病变位置 || '';
+    document.getElementById('xLesionSel').value = data.病灶类型 || '';
+    document.getElementById('pathSel').value = data.病原项目 || '';
+    document.getElementById('specSel').value = data.标本类型 || '';
+    document.getElementById('specOtherInp').value = data.标本备注 || '';
+    document.getElementById('smearSel').value = data.涂片结果 || '';
+    document.getElementById('cultSel').value = data.培养结果 || '';
+    document.getElementById('pcrRes').value = data.核酸结果 || '';
+    document.getElementById('drugSel').value = data.药敏结果 || '';
+    document.getElementById('drugRemarkInp').value = data.药敏备注 || '';
+    document.getElementById('treatSel').value = data.诊断性治疗 || '';
+    document.getElementById('treatInp').value = data.治疗备注 || '';
+    document.getElementById('diagSel').value = data.分型诊断 || '';
+    document.getElementById('diagOtherInp').value = data.其他诊断备注 || '';
+    document.getElementById('diagDate').value = data.确诊日期 || '';
+    document.getElementById('hospitalName').value = data.就诊医院 || '';
+    document.getElementById('reportCardDate').value = data.报卡日期 || '';
+    document.getElementById('netInputDate').value = data.网报日期 || '';
+    document.getElementById('regDate').value = data.登记日期 || '';
+    document.getElementById('regTypeSel').value = data.登记分类 || '';
+    document.getElementById('regOtherInp').value = data.分类备注 || '';
+    document.getElementById('startTreatDate').value = data.起始治疗日 || '';
+    document.getElementById('treatPlan').value = data.治疗方案 || '';
+    document.getElementById('manageSel').value = data.管理方式 || '';
+    document.getElementById('inDate').value = data.入院日期 || '';
+    document.getElementById('pauseDate').value = data.休学起始日 || '';
+    document.getElementById('classRoomNum').value = data.教室数量 || '';
+    document.getElementById('liveInSchoolSel').value = data.住校否 || '';
+    document.getElementById('dormNum').value = data.宿舍数量 || '';
+    document.getElementById('homeCount').value = data.涉访家庭户数 || '';
+    document.getElementById('teacherCount').value = data.老师人数 || '';
+    document.getElementById('otherCount').value = data.其他人员数 || '';
+    document.getElementById('investUser').value = data.调查人 || '';
+    document.getElementById('investDate').value = data.调查日期 || '';
+
+    // 联动下拉显隐
+    jobSel.onchange();
+    tbSel.onchange();
+    contactSel.onchange();
+    symMainSel.onchange();
+    findWaySel.onchange();
+    tbTestSel.onchange();
+    xraySel.onchange();
+    pathSel.onchange();
+    treatSel.onchange();
+    diagSel.onchange();
+    regTypeSel.onchange();
+    manageSel.onchange();
+    liveInSchoolSel.onchange();
+    updateSectionDate();
+
+// 回填动态明细数据（兼容Excel导入的序列化内容）
+    const fillDetail = (wrapId,fieldKey,countInputId,splitChar='@',itemSplit='|')=>{
+        let wrapDom = document.getElementById(wrapId);
+        let countDom = document.getElementById(countInputId);
+        let str = data[fieldKey]||'';
+        let arr = str?str.split(splitChar):[];
+        countDom.value = arr.length;
+        countDom.dispatchEvent(new Event('input'));
+        let childs = wrapDom.querySelectorAll('div');
+        arr.forEach((rowStr,idx)=>{
+            let inputs = childs[idx].querySelectorAll('input,select');
+            let vals = rowStr.split(itemSplit);
+            inputs.forEach((inp,i)=>inp.value = vals[i]||'');
+        })
+    }
+    fillDetail('familyWrap','家属详情','liveCount');
+    fillDetail('visitWrap','就诊详情','visitCountInp');
+    fillDetail('classRoomWrap','教室详情','classRoomNum');
+    fillDetail('dormWrap','宿舍详情','dormNum');
+    fillDetail('homeWrap','家庭详情','homeCount');
+    fillDetail('teacherWrap','老师详情','teacherCount');
+    fillDetail('otherWrap','其他人员详情','otherCount');
+
+    // 关闭弹窗（仅历史编辑时触发，导入不关闭）
+    if(document.getElementById('historyModal').style.display === 'flex'){
+        document.getElementById('historyModal').style.display = 'none';
+    }
+}
+
+// 保存到本地历史记录（有ID覆盖、无ID新增）
 function saveToHistory(data){
     let history = JSON.parse(localStorage.getItem('tbCaseHistory') || '[]');
-    history.push(data);
+    let idx = history.findIndex(item=>item.记录ID === data.记录ID);
+    if(idx > -1){
+        history[idx] = data;
+    }else{
+        history.push(data);
+    }
     localStorage.setItem('tbCaseHistory', JSON.stringify(history));
 }
 
@@ -731,7 +904,78 @@ function getHistory(){
     return JSON.parse(localStorage.getItem('tbCaseHistory') || '[]');
 }
 
-// ==========新增：保存本条按钮==========
+// ==========新增：Excel导入核心逻辑==========
+// 导入按钮点击事件
+document.getElementById('importExcel').onclick = function(){
+    document.getElementById('excelFileInput').click();
+};
+
+// 监听Excel文件选择
+document.getElementById('excelFileInput').onchange = function(e){
+    let file = e.target.files[0];
+    if(!file) return;
+    // 校验文件格式
+    if(!file.name.endsWith('.xlsx') && !file.name.endsWith('.xls')){
+        alert('请选择正确的Excel文件（.xlsx/.xls格式）！');
+        this.value = '';
+        return;
+    }
+    // 读取文件
+    let reader = new FileReader();
+    reader.onload = function(evt){
+        try{
+            let data = new Uint8Array(evt.target.result);
+            let workbook = XLSX.read(data, {type: 'array'});
+            // 取第一个工作表
+            let sheetName = workbook.SheetNames[0];
+            let worksheet = workbook.Sheets[sheetName];
+            // 转换为JSON数组
+            let jsonData = XLSX.utils.sheet_to_json(worksheet);
+            if(jsonData.length === 0){
+                alert('Excel文件中无有效数据！');
+                return;
+            }
+            // 校验表头是否匹配
+            let firstRowKeys = Object.keys(jsonData[0]);
+            if(!firstRowKeys.includes('记录ID') || !firstRowKeys.includes('姓名') || !firstRowKeys.includes('身份证号')){
+                alert('Excel表头不匹配，请导入本系统导出的汇总表！');
+                return;
+            }
+            // 单条记录直接回填，多条记录让用户选择
+            if(jsonData.length === 1){
+                fillFormByData(jsonData[0]);
+                alert('Excel数据已成功导入表单，可直接编辑修改！');
+            }else{
+                // 多条记录生成选择列表
+                let selectHtml = jsonData.map((row,idx)=>
+                    `<option value="${idx}">${idx+1}. 姓名：${row.姓名||'无'} | 身份证号：${row.身份证号||'无'} | 记录ID：${row.记录ID}</option>`
+                ).join('');
+                let userSelect = prompt(`Excel中共${jsonData.length}条记录，请选择要导入编辑的序号：\n${selectHtml}`, '0');
+                if(userSelect === null) return;
+                let selectIdx = Number(userSelect);
+                if(isNaN(selectIdx) || selectIdx < 0 || selectIdx >= jsonData.length){
+                    alert('选择的序号无效！');
+                    return;
+                }
+                fillFormByData(jsonData[selectIdx]);
+                alert('选中的Excel数据已成功导入表单，可直接编辑修改！');
+            }
+            // 可选：将Excel所有记录同步到本地历史
+            if(confirm('是否将Excel中所有记录同步到本地历史记录？')){
+                jsonData.forEach(row=>saveToHistory(row));
+                alert('所有记录已同步到本地历史，可在「查看历史」中管理！');
+            }
+        }catch(err){
+            console.error(err);
+            alert('Excel文件读取失败，请检查文件是否损坏或格式正确！');
+        }
+    };
+    reader.readAsArrayBuffer(file);
+    // 重置文件输入，允许重复选择同一文件
+    this.value = '';
+};
+
+// ==========保存本条按钮==========
 document.getElementById('saveOne').onclick = function(){
     let currentData = getFormData();
     if(!currentData.姓名 && !currentData.身份证号){
@@ -739,10 +983,15 @@ document.getElementById('saveOne').onclick = function(){
         return;
     }
     saveToHistory(currentData);
-    alert('本条信息已保存至本地历史记录！可在【查看历史记录】中查阅');
+    let msg = editRecordId?'已覆盖原记录！是否清空表单？':'本条信息已更新保存，是否清空表单？';
+    if(confirm(msg)){
+        //点击【是】执行清空表单
+        document.getElementById('clearForm').click();
+    }
+    //点击【否】不做任何操作，停留在当前已填表单页面
 };
 
-// ==========新增：清空全部历史记录按钮==========
+// ==========清空全部历史记录按钮==========
 document.getElementById('clearHistory').onclick = function(){
     if(confirm('确定要永久清空所有本地历史记录？删除后无法恢复！')){
         localStorage.removeItem('tbCaseHistory');
@@ -750,7 +999,7 @@ document.getElementById('clearHistory').onclick = function(){
     }
 };
 
-// 清空表单
+// 清空表单【关键：清空后重置editRecordId=null，下次保存为新增】
 document.getElementById('clearForm').onclick = function(){
     if(confirm('确定要清空当前表单吗？')){
         document.querySelectorAll('input, select').forEach(el=>{
@@ -767,6 +1016,7 @@ document.getElementById('clearForm').onclick = function(){
         document.getElementById('teacherWrap').innerHTML='';
         document.getElementById('otherWrap').innerHTML='';
         document.getElementById('visitWrap').innerHTML='';
+        editRecordId = null; // 重置标记：新增模式
     }
 };
 
@@ -778,11 +1028,37 @@ document.getElementById('viewHistory').onclick = function(){
     if(history.length === 0){
         list.innerHTML = '<p>暂无历史记录</p>';
     }else{
-        let html = `<table border="1" style="width:100%;border-collapse:collapse;">
-            <tr>${excelHeader.map(h=>`<th style="padding:4px;font-size:12px;">${h}</th>`).join('')}</tr>
-            ${history.map(row=>`<tr>${excelHeader.map(h=>`<td style="padding:4px;font-size:12px;">${row[h] || ''}</td>`).join('')}</tr>`).join('')}
+        let html = `<table border="1" style="width:100%;border-collapse:collapse;font-size:12px;">
+            <tr><th>操作</th>${excelHeader.map(h=>`<th style="padding:4px;">${h}</th>`).join('')}</tr>
+            ${history.map((row,idx)=>`<tr>
+                <td>
+                    <button class="edit-btn" data-index="${idx}">编辑载入</button>
+                    <button class="del-btn" data-index="${idx}" style="color:#fff;background:#f53f3f;border:none;margin-left:4px;">删除</button>
+                </td>
+                ${excelHeader.map(h=>`<td style="padding:4px;max-width:120px;overflow:hidden;">${row[h] || ''}</td>`).join('')}
+            `).join('')}
         </table>`;
         list.innerHTML = html;
+        //绑定编辑按钮事件
+        document.querySelectorAll('.edit-btn').forEach(btn=>{
+            btn.onclick = function(){
+                let index = Number(this.dataset.index);
+                let rowData = history[index];
+                fillFormByData(rowData); //回填+自动关弹窗
+            }
+        })
+        //删除按钮绑定
+        document.querySelectorAll('.del-btn').forEach(btn=>{
+            btn.onclick = function(){
+                let idx = Number(this.dataset.index);
+                if(confirm('确定删除本条记录？删除无法恢复！')){
+                    history.splice(idx,1);
+                    localStorage.setItem('tbCaseHistory',JSON.stringify(history));
+                    //刷新弹窗列表
+                    document.getElementById('viewHistory').click();
+                }
+            }
+        })
     }
     modal.style.display = 'flex';
 };
@@ -792,22 +1068,98 @@ document.getElementById('historyClose').onclick = function(){
     document.getElementById('historyModal').style.display = 'none';
 };
 
-// 导出Word
+// 导出Word（修正字号：总标题四号黑体加粗、一级标题小四号黑体、正文小四12pt宋体，填写内容下划线、国标公文页边距）
 document.getElementById('exportWord').onclick = function(){
+    // 第一步：从【原页面真实DOM】提前读取所有select选中文本（关键！不依赖克隆节点）
+    const selMap = new Map();
+    document.querySelectorAll('#printWrap select').forEach(sel=>{
+        let txt = '';
+        if(sel.selectedIndex > -1 && sel.options[sel.selectedIndex]){
+            txt = sel.options[sel.selectedIndex].text.trim();
+        }
+        selMap.set(sel,txt);
+    });
+
+    // 克隆页面
     let cloneDom = document.getElementById('printWrap').cloneNode(true);
+
+    // input替换下划线（原有逻辑不动）
     let allInput = cloneDom.querySelectorAll('input');
     allInput.forEach(inp=>{
-        let val = inp.value;
-        let txt = document.createTextNode(val||'');
-        inp.parentNode.replaceChild(txt,inp);
+        let val = inp.value || '';
+        let wrap;
+        if(val){
+            let u = document.createElement('u');
+            u.innerText = val;
+            wrap = u;
+        }else{
+            wrap = document.createTextNode('');
+        }
+        inp.parentNode.replaceChild(wrap,inp);
     });
-    let allSel = cloneDom.querySelectorAll('select');
-    allSel.forEach(sel=>{
-        let txt = document.createTextNode(sel.value||'');
-        sel.parentNode.replaceChild(txt,sel);
+
+    // select替换：根据之前原表单存好的值写入下划线
+    let cloneSelList = cloneDom.querySelectorAll('select');
+    let oriSelList = document.querySelectorAll('#printWrap select');
+    cloneSelList.forEach((selClone,idx)=>{
+        let txt = selMap.get(oriSelList[idx])||'';
+        let newNode;
+        if(txt){
+            let u = document.createElement('u');
+            u.textContent = txt;
+            newNode = u;
+        }else{
+            newNode = document.createTextNode('');
+        }
+        selClone.parentNode.replaceChild(newNode, selClone);
     });
+
     let finalHtml = cloneDom.innerHTML;
-    let docBlob = htmlDocx.asBlob(`<html><body style="font-family:宋体;">${finalHtml}</body></html>`);
+
+    // Word样式不变
+    let docHtml = `
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{
+    font-family:宋体;
+    font-size:12pt;
+    line-height:28pt;
+    margin:0;
+}
+@page{
+    size:A4;
+    margin:3.7cm 2.6cm 3.5cm 2.8cm;
+}
+h1{
+    font-family:"黑体";
+    font-size:14pt;
+    font-weight:bold;
+    text-align:center;
+}
+h2{
+    font-family:"黑体";
+    font-size:12pt;
+    font-weight:bold;
+    margin-top:12px;
+}
+table{border-collapse:collapse;width:100%;}
+td,th{
+    border:1px solid #333;
+    padding:5px;
+    font-family:宋体;
+    font-size:12pt;
+}
+u{text-decoration:underline;}
+</style>
+</head>
+<body>
+${finalHtml}
+</body>
+</html>`;
+
+    let docBlob = htmlDocx.asBlob(docHtml);
     saveAs(docBlob,`肺结核个案调查表_${document.getElementById('name').value || '未命名'}.docx`);
 };
 
@@ -818,13 +1170,11 @@ document.getElementById('saveExcel').onclick = function(){
         alert('请填写至少姓名和身份证号后再保存！');
         return;
     }
-    // 保存到本地历史
+    // 保存覆盖/新增历史
     saveToHistory(currentData);
-    // 读取所有历史数据
+    // 读取所有历史数据导出Excel
     let allHistory = getHistory();
-    // 生成Excel
     let wb = XLSX.utils.book_new();
-    // 表头+所有数据
     let rows = [
         excelHeader,
         ...allHistory.map(row=>excelHeader.map(h=>row[h] || ''))
@@ -832,9 +1182,8 @@ document.getElementById('saveExcel').onclick = function(){
     let ws = XLSX.utils.aoa_to_sheet(rows);
     XLSX.utils.book_append_sheet(wb,ws,"肺结核个案汇总");
     let buf = XLSX.write(wb,{bookType:'xlsx',type:'array'});
-    // 下载文件
     saveAs(new Blob([buf],{type:"application/octet-stream"}),`肺结核个案汇总表_${new Date().toLocaleDateString().replace(/\//g,'-')}.xlsx`);
-    alert('保存成功！文件已生成，可选择保存到你的指定本地文件夹');
+    alert(editRecordId?'已覆盖原有记录并导出汇总表':'新增记录成功并导出汇总表！');
 };
 
 // 身份证自动带出年龄性别
@@ -1103,6 +1452,7 @@ dormNum.oninput=function(){
         dormWrap.appendChild(div);
     }
 };
+
 </script>
 </body>
 </html>
