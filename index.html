@@ -133,7 +133,7 @@ table{font-size:12px;}
     <div class="item">
         <span class="label-fixed">身份证号：</span>
         <input type="text" class="inp-id" id="idcard" maxlength="18">
-        <span class="label-fixed">职业：</span>
+        <span class="label-fixed">，职业：</span>
         <select id="job">
             <option value="">请选择</option>
             <option value="学生">学生</option>
@@ -146,11 +146,11 @@ table{font-size:12px;}
 </div>
 
 <div class="item" id="autoInfoBox" style="display:none;">
-    <span class="label-fixed">性别：</span>
+    <span class="label-fixed">，性别：</span>
     <input class="inp-short read" readonly id="sexShow">
-    <span class="label-fixed">出生日期：</span>
+    <span class="label-fixed">，出生日期：</span>
     <input class="inp-short read" readonly id="birthShow">
-    <span class="label-fixed">年龄：</span>
+    <span class="label-fixed">，年龄：</span>
     <input class="inp-short read" readonly id="ageShow"> 岁
 </div>
 
@@ -170,19 +170,19 @@ table{font-size:12px;}
 <div class="item">
     <span class="label-fixed">年级班级：</span>
     <input type="text" id="className" placeholder="年级班级">
-    <span class="label-fixed">班级人数：</span>
+    <span class="label-fixed">，班级人数：</span>
     <input type="text" class="inp-classnum" id="classNum" placeholder="">
 </div>
 <div class="item">
     <span class="label-fixed">宿舍：</span>
     <input type="text" class="inp-dormaddr" id="dormAddr" placeholder="楼栋+楼层+房号">
-    <span class="label-fixed">室友人数：</span>
+    <span class="label-fixed">，室友人数：</span>
     <input type="text" class="inp-roommate" id="roomMateNum">
 </div>
 <div class="item">
     <span class="label-fixed">宿舍面积(m²)：</span>
     <input type="text" class="inp-area5" id="dormArea">
-    <span class="label-fixed">开窗面积(m²)：</span>
+    <span class="label-fixed">，开窗面积(m²)：</span>
     <input type="text" class="inp-area5" id="winArea">
 </div>
 <div class="item">
@@ -192,7 +192,7 @@ table{font-size:12px;}
         <option>不定时开窗通风</option>
         <option>每日开窗通风</option>
     </select>
-    <span class="label-fixed">环境卫生：</span>
+    <span class="label-fixed">，环境卫生：</span>
     <select id="dormEnv">
         <option>好</option>
         <option>一般</option>
@@ -207,14 +207,14 @@ table{font-size:12px;}
 <div class="item">
     <span class="label-fixed">面积(m²)：</span>
     <input type="text" class="inp-char5" id="homeArea">
-    <span class="label-fixed">通风：</span>
+    <span class="label-fixed">，通风：</span>
     <select id="homeWindSel">
         <option>请选择</option>
         <option>不开窗</option>
         <option>不定时开窗</option>
         <option>每日开窗</option>
     </select>
-    <span class="label-fixed">环境：</span>
+    <span class="label-fixed">，环境：</span>
     <select id="homeEnv">
         <option>好</option>
         <option>一般</option>
@@ -241,17 +241,19 @@ table{font-size:12px;}
     <div class="item">
         <span class="label-fixed">首次诊断时间（年）：</span>
         <input type="text" class="inp-short" id="firstTbYear">
-        <span class="label-fixed">是否治疗：</span>
+        <span class="label-fixed">，是否治疗：</span>
         <select id="firstTbTreat">
-            <option>是</option>
-            <option>否</option>
-        </select>
+              <option>请选择</option>
+              <option>是</option>
+             <option>否</option>
+</select>
     </div>
     <div class="item">
         <span class="label-fixed">末次诊断时间（年）：</span>
         <input type="text" class="inp-short" id="lastTbYear">
-        <span class="label-fixed">是否治疗：</span>
+        <span class="label-fixed">，是否治疗：</span>
         <select id="lastTbTreat">
+            <option>请选择</option>
             <option>是</option>
             <option>否</option>
         </select>
@@ -317,7 +319,7 @@ table{font-size:12px;}
         <option>一般</option>
         <option>差</option>
     </select>
-    <span class="label-fixed">睡眠状况：</span>
+    <span class="label-fixed">，睡眠状况：</span>
     <select id="sleep">
         <option value="">请选择</option>
         <option>好</option>
@@ -362,7 +364,7 @@ table{font-size:12px;}
     <input placeholder="例：20260101" id="firstSymDate" type="date">
 </div>
 
-<div id="symBoxAll" class="hide">
+<div id="symBoxAll">
     <div class="item" id="severityItem">
         <span class="label-fixed">4.2 自我感觉症状的严重程度：</span>
         <select id="symLevel">
@@ -376,7 +378,7 @@ table{font-size:12px;}
         <span class="label-fixed">4.3 就医次数：</span>
         <input type="number" id="visitCountInp" min="0" class="inp-count6" placeholder="填写数字">
     </div>
-    <div id="visitWrap"></div>
+    <div id="visitWrap" class="hide"></div>
 </div>
 
 <h2>五、本次患者诊疗情况</h2>
@@ -400,12 +402,13 @@ table{font-size:12px;}
         <option>γ干扰素释放试验</option>
     </select>
     <span id="ppdWrap" class="hide">
-        检测日期：<input id="ppdDate" placeholder="例：20260101">，结果(mm)：<input id="ppdRes" placeholder="皮试大小,如5*9">
-        <select id="ppdSign">
-            <option>无水泡/双圈/坏死/溃疡等</option>
-            <option>有水泡/双圈/坏死/溃疡等</option>
-        </select>
-    </span>
+    检测日期：<input id="ppdDate" placeholder="例：20260101">，结果(mm)：<input id="ppdRes" placeholder="皮试大小,如5*9">，
+    <select id="ppdSign">
+        <option>请选择</option>
+        <option>有水泡/双圈/坏死/溃疡等</option>
+        <option>无水泡/双圈/坏死/溃疡等</option>
+    </select>
+</span>
     <span id="igraWrap" class="hide">
         方法：<input id="igraMethod" placeholder="方法">，<input id="igraDate" placeholder="检测日期">，结果：
         <select id="igraRes">
@@ -1068,99 +1071,72 @@ document.getElementById('historyClose').onclick = function(){
     document.getElementById('historyModal').style.display = 'none';
 };
 
-// 导出Word（修正字号：总标题四号黑体加粗、一级标题小四号黑体、正文小四12pt宋体，填写内容下划线、国标公文页边距）
+// 导出Word：按ID匹配下拉值，.hide全部删除，仅页面可见内容导出
 document.getElementById('exportWord').onclick = function(){
-    // 第一步：从【原页面真实DOM】提前读取所有select选中文本（关键！不依赖克隆节点）
-    const selMap = new Map();
-    document.querySelectorAll('#printWrap select').forEach(sel=>{
-        let txt = '';
-        if(sel.selectedIndex > -1 && sel.options[sel.selectedIndex]){
-            txt = sel.options[sel.selectedIndex].text.trim();
+    //1、按控件ID存下拉文字，彻底杜绝顺序错位
+    const selDict = {};
+    document.querySelectorAll('#printWrap select').forEach(item=>{
+        let sid = item.id;
+        let showText = '';
+        if(item.selectedIndex >= 0 && item.options[item.selectedIndex]){
+            showText = item.options[item.selectedIndex].text.trim();
         }
-        selMap.set(sel,txt);
+        selDict[sid] = showText;
     });
 
-    // 克隆页面
-    let cloneDom = document.getElementById('printWrap').cloneNode(true);
+    //克隆表单
+    let wrapDom = document.getElementById('printWrap');
+    let cloneDom = wrapDom.cloneNode(true);
 
-    // input替换下划线（原有逻辑不动）
-    let allInput = cloneDom.querySelectorAll('input');
-    allInput.forEach(inp=>{
-        let val = inp.value || '';
-        let wrap;
-        if(val){
+    // 关键：所有class=hide元素直接移除，页面隐藏内容完全不进Word
+    cloneDom.querySelectorAll('.hide').forEach(el=>el.remove());
+
+    //input转为带下划线文本
+    cloneDom.querySelectorAll('input').forEach(inp=>{
+        let v = inp.value||'';
+        let node;
+        if(v){
             let u = document.createElement('u');
-            u.innerText = val;
-            wrap = u;
+            u.textContent = v;
+            node = u;
         }else{
-            wrap = document.createTextNode('');
+            node = document.createTextNode('');
         }
-        inp.parentNode.replaceChild(wrap,inp);
+        inp.parentNode.replaceChild(node,inp);
     });
 
-    // select替换：根据之前原表单存好的值写入下划线
-    let cloneSelList = cloneDom.querySelectorAll('select');
-    let oriSelList = document.querySelectorAll('#printWrap select');
-    cloneSelList.forEach((selClone,idx)=>{
-        let txt = selMap.get(oriSelList[idx])||'';
-        let newNode;
-        if(txt){
+    //select按ID取值替换，不再靠下标
+    cloneDom.querySelectorAll('select').forEach(s=>{
+        let id = s.id;
+        let text = selDict[id]||'';
+        let nd;
+        if(text){
             let u = document.createElement('u');
-            u.textContent = txt;
-            newNode = u;
+            u.textContent = text;
+            nd = u;
         }else{
-            newNode = document.createTextNode('');
+            nd = document.createTextNode('');
         }
-        selClone.parentNode.replaceChild(newNode, selClone);
+        s.parentNode.replaceChild(nd,s);
     });
 
-    let finalHtml = cloneDom.innerHTML;
-
-    // Word样式不变
-    let docHtml = `
+    let html = cloneDom.innerHTML;
+    let docStr = `
 <html>
 <head>
 <meta charset="utf-8">
 <style>
-body{
-    font-family:宋体;
-    font-size:12pt;
-    line-height:28pt;
-    margin:0;
-}
-@page{
-    size:A4;
-    margin:3.7cm 2.6cm 3.5cm 2.8cm;
-}
-h1{
-    font-family:"黑体";
-    font-size:14pt;
-    font-weight:bold;
-    text-align:center;
-}
-h2{
-    font-family:"黑体";
-    font-size:12pt;
-    font-weight:bold;
-    margin-top:12px;
-}
-table{border-collapse:collapse;width:100%;}
-td,th{
-    border:1px solid #333;
-    padding:5px;
-    font-family:宋体;
-    font-size:12pt;
-}
+body{font-family:宋体;font-size:12pt;line-height:28pt;margin:0;}
+@page{size:A4;margin:3.7cm 2.6cm 3.5cm 2.8cm;}
+h1{font-family:"黑体";font-size:14pt;font-weight:bold;text-align:center;}
+h2{font-family:"黑体";font-size:12pt;font-weight:bold;margin-top:12px;}
 u{text-decoration:underline;}
 </style>
 </head>
-<body>
-${finalHtml}
-</body>
+<body>${html}</body>
 </html>`;
-
-    let docBlob = htmlDocx.asBlob(docHtml);
-    saveAs(docBlob,`肺结核个案调查表_${document.getElementById('name').value || '未命名'}.docx`);
+    let blob = htmlDocx.asBlob(docStr);
+    saveAs(blob,`肺结核个案调查表_${document.getElementById('name').value||'未命名'}.docx`);
 };
 
 // 保存到Excel汇总表
@@ -1233,7 +1209,7 @@ homeCount.oninput=function(){
     for(let i=1;i<=num;i++){
         let div=document.createElement('div');
         div.className='home-row';
-        div.innerHTML=`<span>家庭${i}：</span><input placeholder="家中或其他具体地址"><span>起始日期</span><input type="date"><span>终止日期</span><input type="date"><input class="inp-dayweek15" placeholder="居住频率(天/周)"><span>家庭成员</span><input placeholder="注明人名及人数">`;
+        div.innerHTML=`<span>家庭${i}：</span><input placeholder="家中或其他具体地址">，自<input type="date">至<input type="date">，<span>居住频率(天/周)：</span><input style="width:5ch;" placeholder="">，<span>家庭成员：</span><input placeholder="注明人名及人数">`;
         homeWrap.appendChild(div);
     }
 };
@@ -1247,7 +1223,7 @@ teacherCount.oninput=function(){
     for(let i=1;i<=tNum;i++){
         let tr=document.createElement('div');
         tr.className='teacher-row';
-        tr.innerHTML=`<span>老师${i}：</span><input placeholder="如：语文"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-teacherfreq" placeholder="上课频率(天/周)"><span>老师姓名：</span><input placeholder="注明人名">`;
+        tr.innerHTML=`<span>老师${i}：</span><input placeholder="如：语文">，自<input type="date">至<input type="date">，<span>上课频率(天/周)：</span><input style="width:5ch;" placeholder="">，<span>老师姓名：</span><input placeholder="注明人名">`;
         teacherWrap.appendChild(tr);
     }
 };
@@ -1261,7 +1237,7 @@ otherCount.oninput=function(){
     for(let i=1;i<=oNum;i++){
         let or=document.createElement('div');
         or.className='other-row';
-        or.innerHTML=`<span>其他${i}：</span><input class="inp-otherjob" placeholder="如：宿管"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-otherfreq" placeholder="接触频率(天/周)"><input class="inp-othername" placeholder="人员姓名">`;
+        or.innerHTML=`<span>其他${i}：</span><input class="inp-otherjob" placeholder="如：宿管">，自<input type="date">至<input type="date">，<span>接触频率(天/周)：</span><input style="width:5ch;" placeholder="">，<span>姓名：</span><input class="inp-othername" placeholder="人员姓名">`;
         otherWrap.appendChild(or);
     }
 };
@@ -1297,7 +1273,15 @@ jobSel.onchange = ()=> otherBox.classList.toggle('hide', jobSel.value !== '其�
 // 既往结核病史展开
 const tbSel = document.getElementById('tbHistory');
 const tbBox = document.getElementById('tbDetailBox');
-tbSel.onchange = ()=> tbBox.style.display = tbSel.value==='有'?'block':'none';
+tbSel.onchange = ()=>{
+    if(tbSel.value === '有'){
+        tbBox.classList.remove('hide');
+        tbBox.style.display = 'block';
+    }else{
+        tbBox.classList.add('hide');
+        tbBox.style.display = 'none';
+    }
+}
 
 // 接触史详情
 const contactSel = document.getElementById('contactSel');
@@ -1316,17 +1300,16 @@ symMainSel.onchange = function(){
     let val = this.value;
     symRemarkInp.classList.add('hide');
     dateWrap.classList.add('hide');
-    severityItem.classList.add('hide');
-    symBoxAll.style.display='none';
+    visitWrap.classList.add('hide');
     visitWrap.innerHTML='';
     visitCountInp.value='';
 
+    // symBoxAll永久显示，4.2、4.3永久保留，不会被hide删除
     if(val === '无症状'){
-        symBoxAll.style.display='block';
+        visitWrap.classList.remove('hide');
     }else if(val !== ''){
         dateWrap.classList.remove('hide');
-        severityItem.classList.remove('hide');
-        symBoxAll.style.display='block';
+        visitWrap.classList.remove('hide');
         if(val === '⑪以上多种症状'){
             symRemarkInp.classList.remove('hide');
             symRemarkInp.placeholder='填编号，如1、2、5';
@@ -1428,7 +1411,7 @@ classRoomNum.oninput = function(){
     for(let i=1;i<=n;i++){
         let div = document.createElement('div');
         div.className = 'class-row';
-        div.innerHTML = `<span>教室${i}：</span><input placeholder="教学楼+楼层+教室编号"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-classhour18" placeholder="上课频次(小时/周)"><span>同班学生：</span><input class="inp-classnum" placeholder="人数"><span>同楼层：</span><input placeholder="教室号">`;
+        div.innerHTML = `<span>教室${i}：</span><input placeholder="教学楼+楼层+教室编号">，自<input type="date">至<input type="date">，<span>上课频次(小时/周)：</span><input style="width:5ch;" placeholder="">，<span>同学：</span><input class="inp-classnum" placeholder="人数">，<span>同楼层：</span><input placeholder="教室号">`;
         classRoomWrap.appendChild(div);
     }
 };
@@ -1448,7 +1431,7 @@ dormNum.oninput=function(){
     for(let i=1;i<=n;i++){
         let div=document.createElement('div');
         div.className='dorm-row';
-        div.innerHTML=`<span>宿舍${i}：</span><input class="inp-dormaddr" placeholder="楼栋+楼层+房号"><span>起始日期：</span><input type="date"><span>终止日期：</span><input type="date"><input class="inp-dayweek15" placeholder="住宿天数(天/周)"><span>同室：</span><input class="inp-classnum" placeholder="人数"><span>同楼层：</span><input placeholder="宿舍号">`;
+        div.innerHTML=`<span>宿舍${i}：</span><input class="inp-dormaddr" placeholder="楼栋+楼层+房号">，自<input type="date">至<input type="date">，<span>住宿天数(天/周)：</span><input style="width:5ch;" placeholder="">，<span>同室：</span><input class="inp-classnum" placeholder="人数">，<span>同楼层：</span><input placeholder="宿舍号">`;
         dormWrap.appendChild(div);
     }
 };
