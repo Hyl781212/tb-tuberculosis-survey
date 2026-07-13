@@ -402,7 +402,7 @@ table{font-size:12px;}
         <option>γ干扰素释放试验</option>
     </select>
     <span id="ppdWrap" class="hide">
-    检测日期：<input id="ppdDate" placeholder="例：20260101">，结果(mm)：<input id="ppdRes" placeholder="皮试大小,如5*9">，
+    检测日期：<input type="date" id="ppdDate">，结果(mm)：<input id="ppdRes" placeholder="皮试大小,如5*9">，
     <select id="ppdSign">
         <option>请选择</option>
         <option>有水泡/双圈/坏死/溃疡等</option>
@@ -420,15 +420,15 @@ table{font-size:12px;}
     </span>
 </div>
 <div class="item">
-    <span class="label-fixed">5.3 胸部X片检查：</span>
+    <span class="label-fixed">5.3 胸部影像学检查：</span>
     <select id="xraySel">
         <option value="">请选择</option>
-        <option>无</option>
+        <option>双肺</option>
         <option>左肺</option>
         <option>右肺</option>
     </select>
-    <span id="xrayWrap" class="hide">
-        <input id="xDate" placeholder="检查日期">，<input id="xPos" placeholder="请表明上、中、下">，
+    
+        <input type="date" id="xDate">，<input id="xPos" placeholder="检查方式(X线/CT)及结果">，
         <select id="xLesionSel">
             <option value="">请选择</option>
             <option>无</option>
