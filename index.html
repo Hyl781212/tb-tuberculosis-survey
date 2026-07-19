@@ -1032,6 +1032,22 @@ document.getElementById('viewHistory').onclick = function(){
     let history = getHistory();
     let modal = document.getElementById('historyModal');
     let list = document.getElementById('historyList');
+
+    // 姓名脱敏：第二个字*
+    function maskName(str) {
+        if (!str || str.length < 2) return str || '';
+        const arr = Array.from(str);
+        arr[1] = '*';
+        return arr.join('');
+    }
+    // 身份证脱敏：第4~14位*
+    function maskId(str) {
+        if (!str || str.length < 14) return str || '';
+        const arr = Array.from(str);
+        for(let i=3;i<=13;i++) arr[i] = '*';
+        return arr.join('');
+    }
+
     if(history.length === 0){
         list.innerHTML = '<p>暂无历史记录</p>';
     }else{
@@ -1042,7 +1058,12 @@ document.getElementById('viewHistory').onclick = function(){
                     <button class="edit-btn" data-index="${idx}">编辑载入</button>
                     <button class="del-btn" data-index="${idx}" style="color:#fff;background:#f53f3f;border:none;margin-left:4px;">删除</button>
                 </td>
-                ${excelHeader.map(h=>`<td style="padding:4px;max-width:120px;overflow:hidden;">${row[h] || ''}</td>`).join('')}
+                ${excelHeader.map(h=>{
+                    let val = row[h] || '';
+                    if(h === '姓名') val = maskName(val);
+                    if(h === '身份证号') val = maskId(val);
+                    return `<td style="padding:4px;max-width:120px;overflow:hidden;">${val}</td>`;
+                }).join('')}
             `).join('')}
         </table>`;
         list.innerHTML = html;
