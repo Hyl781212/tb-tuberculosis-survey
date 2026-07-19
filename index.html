@@ -2,11 +2,13 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>学校肺结核患者个案调查表</title>
-<script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.3.1/dist/html-docx.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<title>School TB Survey</title>
+<!-- 国内稳定镜像，解决外网加载失败 -->
+<script src="https://cdn.bootcdn.net/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/html-docx-js/0.3.1/html-docx.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <style>
+
 *{box-sizing:border-box;font-family:"Microsoft YaHei",SimSun}
 body{width:210mm;margin:0 auto;padding:30px 25px;font-size:15px;line-height:1.7;background:#fff}
 .top-btn-box{margin-bottom:20px;text-align:right;gap:10px;display:flex;justify-content:flex-end;flex-wrap:wrap;}
@@ -110,7 +112,7 @@ table{font-size:12px;}
 </div>
 
 <div id="printWrap">
-<h1>学校肺结核患者个案调查表</h1>
+<h1>School TB Survey</h1>
 
 <!-- 【修改处：原复选框改为下拉框】 -->
 <div class="case-type-row" style="margin:12px 0; font-family:宋体; font-size:12pt;">
@@ -656,8 +658,8 @@ function getFormData(){
         //【修改取值：从下拉框拿值】
         病例分类:document.getElementById('caseTypeSel').value,
         记录ID: editRecordId||new Date().getTime(),
-        姓名: document.getElementById('name').value,
-        身份证号: document.getElementById('idcard').value,
+        姓名: realFullName,
+        身份证号: realIdCard,
         职业: document.getElementById('job').value,
         职业补充: document.getElementById('jobOther').value,
         性别: document.getElementById('sexShow').value,
@@ -760,7 +762,9 @@ function fillFormByData(data){
     document.getElementById('caseTypeSel').value = data.病例分类 || '';
 
     document.getElementById('name').value = data.姓名 || '';
-    document.getElementById('idcard').value = data.身份证号 || '';
+    realFullName = data.姓名 || ''; //新增这一行
+   document.getElementById('idcard').value = data.身份证号 || '';
+    realIdCard = data.身份证号 || '';
     document.getElementById('job').value = data.职业 || '';
     document.getElementById('jobOther').value = data.职业补充 || '';
     document.getElementById('sexShow').value = data.性别 || '';
@@ -1136,7 +1140,7 @@ u{text-decoration:underline;}
 <body>${html}</body>
 </html>`;
     let blob = htmlDocx.asBlob(docStr);
-    saveAs(blob,`肺结核个案调查表_${document.getElementById('name').value||'未命名'}.docx`);
+    saveAs(blob,`肺TB个案调查表_${document.getElementById('name').value||'未命名'}.docx`);
 };
 
 // 保存到Excel汇总表
@@ -1156,9 +1160,9 @@ document.getElementById('saveExcel').onclick = function(){
         ...allHistory.map(row=>excelHeader.map(h=>row[h] || ''))
     ];
     let ws = XLSX.utils.aoa_to_sheet(rows);
-    XLSX.utils.book_append_sheet(wb,ws,"肺结核个案汇总");
+    XLSX.utils.book_append_sheet(wb,ws,"肺TB个案汇总");
     let buf = XLSX.write(wb,{bookType:'xlsx',type:'array'});
-    saveAs(new Blob([buf],{type:"application/octet-stream"}),`肺结核个案汇总表_${new Date().toLocaleDateString().replace(/\//g,'-')}.xlsx`);
+    saveAs(new Blob([buf],{type:"application/octet-stream"}),`肺TB个案汇总表_${new Date().toLocaleDateString().replace(/\//g,'-')}.xlsx`);
     alert(editRecordId?'已覆盖原有记录并导出汇总表':'新增记录成功并导出汇总表！');
 };
 
@@ -1435,6 +1439,59 @@ dormNum.oninput=function(){
         dormWrap.appendChild(div);
     }
 };
+
+// 全局缓存完整真实姓名，导出表格读取此变量
+let realFullName = "";
+const nameInput = document.getElementById("name");
+
+// 每次输入文字，保存完整原名
+nameInput.addEventListener("input", function(){
+    realFullName = this.value;
+});
+
+// 失去焦点，页面显示脱敏（第二个字变*）
+nameInput.addEventListener("blur", function(){
+    const full = realFullName;
+    if(full.length >= 2){
+        const nameArr = Array.from(full);
+        nameArr[1] = "*";
+        this.value = nameArr.join("");
+    }
+});
+
+// 点击输入框，恢复完整姓名编辑
+nameInput.addEventListener("focus", function(){
+    this.value = realFullName;
+    this.setSelectionRange(this.value.length, this.value.length);
+});
+
+// 缓存完整身份证，导出读取原值
+let realIdCard = "";
+const idInput = document.getElementById("idcard");
+
+// 实时保存完整身份证
+idInput.addEventListener("input", function(){
+    realIdCard = this.value;
+});
+
+// 失去焦点：第4~14位替换为*
+idInput.addEventListener("blur", function(){
+    const id = realIdCard;
+    if(id.length >= 14){
+        const arr = Array.from(id);
+        // 下标3到13 对应第4位至第14位
+        for(let i=3; i<=13; i++){
+            arr[i] = "*";
+        }
+        this.value = arr.join("");
+    }
+});
+
+// 点击输入框恢复完整身份证
+idInput.addEventListener("focus", function(){
+    this.value = realIdCard;
+    this.setSelectionRange(this.value.length, this.value.length);
+});
 
 </script>
 </body>
